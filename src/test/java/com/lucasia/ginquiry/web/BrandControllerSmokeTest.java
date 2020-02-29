@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class BrandControllerSmokeTest {
 
-
     @Autowired
     private BrandController brandController;
 

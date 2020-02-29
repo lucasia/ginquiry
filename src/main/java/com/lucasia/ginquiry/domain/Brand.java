@@ -27,4 +27,5 @@ public class Brand {
 
     public Brand() {
     }
+
 }
