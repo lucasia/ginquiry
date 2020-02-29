@@ -9,14 +9,14 @@ import javax.persistence.*;
 @Entity
 public class Booze {
 
-    static String NAME = "Winter Edition";
-    static String DESCRIPTION = "A juniper led earthy gin with fragrant pine notes.";
-    static final Booze ROCK_ROSE_WINTER = new Booze(1L, Brand.ROCK_ROSE, NAME, DESCRIPTION);
+    public static String NAME = "Winter Edition";
+    public static String DESCRIPTION = "A juniper led earthy gin with fragrant pine notes.";
+    public static final Booze ROCK_ROSE_WINTER = new Booze(Brand.ROCK_ROSE, NAME, DESCRIPTION);
 
     private @Id @GeneratedValue Long id;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Brand brand;
 
     @NonNull
@@ -26,8 +26,7 @@ public class Booze {
     @NonNull
     private String description;
 
-    public Booze(@NonNull Long id, @NonNull Brand brand, @NonNull String name, @NonNull String description) {
-        this.id = id;
+    public Booze(@NonNull Brand brand, @NonNull String name, @NonNull String description) {
         this.brand = brand;
         this.name = name;
         this.description = description;

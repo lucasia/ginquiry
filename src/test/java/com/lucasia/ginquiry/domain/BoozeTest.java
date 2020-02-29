@@ -8,18 +8,17 @@ import org.junit.Test;
 public class BoozeTest {
 
     @Test
-    public void testBrand() {
-        Assert.assertEquals(Brand.ROCK_ROSE, new Brand(Brand.BRAND_NAME));
-
+    public void testMissingBrandNameThrowsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new Brand(null));
     }
 
     @Test
-    public void testBooze() {
-        final Booze booze = new Booze(1L, new Brand(Brand.BRAND_NAME), Booze.NAME, Booze.DESCRIPTION);
-        Assert.assertEquals(Booze.ROCK_ROSE_WINTER, booze);
+    public void testMissingNameThrowsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Booze(null, "name", "description"));
 
-        Assert.assertThrows(NullPointerException.class, () -> new Booze(null, null, null, null));
+        Assert.assertThrows(NullPointerException.class, () -> new Booze(new Brand("brand"), null, "description"));
+
+        Assert.assertThrows(NullPointerException.class, () -> new Booze(new Brand("brand"), "name", null));
     }
 
 }
