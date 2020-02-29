@@ -20,13 +20,13 @@ public abstract class AbstractController<T, ID> {
     // aggregate root
 
     @GetMapping()
-    List<T> allBrands(){
+    List<T> all(){
         return getRepository().findAll();
     }
 
     @PostMapping()
-    T newBrand(@RequestBody T newBrand) {
-        return getRepository().save(newBrand);
+    T newEntity(@RequestBody T newEntity) {
+        return getRepository().save(newEntity);
     }
 
     // single item
@@ -40,8 +40,6 @@ public abstract class AbstractController<T, ID> {
 
         return byId.orElseThrow(() -> new ResourceNotFoundException(id));
    }
-
-//   public abstract JpaRepository<T, ID> getRepository();
 
 
     public JpaRepository<T, ID> getRepository() {

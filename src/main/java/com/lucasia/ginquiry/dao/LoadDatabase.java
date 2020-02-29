@@ -14,14 +14,18 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatbase(BrandRepository brandRepository, BoozeRepository boozeRepository) {
         return args -> {
-            log.info("Preloading " + Brand.ROCK_ROSE);
-            brandRepository.save(Brand.ROCK_ROSE);
-
             log.info("Preloading " + Brand.HENDRICKS);
             brandRepository.save(Brand.HENDRICKS);
 
+            log.info("Preloading " + Brand.ROCK_ROSE);
+            brandRepository.save(Brand.ROCK_ROSE);
+
             log.info("Preloading " + Booze.ROCK_ROSE_WINTER);
             boozeRepository.save(Booze.ROCK_ROSE_WINTER);
+
+            log.info("Preloading " + Booze.ROCK_ROSE_SPRING);
+            boozeRepository.save(Booze.ROCK_ROSE_SPRING);
+
         };
     }
 

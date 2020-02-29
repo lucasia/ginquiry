@@ -19,7 +19,7 @@ public class Booze implements Nameable {
     private @Id @GeneratedValue Long id;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Brand brand;
 
     @NonNull
