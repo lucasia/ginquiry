@@ -43,8 +43,8 @@ public class BrandControllerTest {
         resultActions.andDo(
                 print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(Matchers.containsString(Brand.ROCK_ROSE.getBrandName())))
-                .andExpect(content().string(Matchers.containsString(Brand.HENDRICKS.getBrandName())));
+                .andExpect(content().string(Matchers.containsString(Brand.ROCK_ROSE.getName())))
+                .andExpect(content().string(Matchers.containsString(Brand.HENDRICKS.getName())));
 
     }
 
@@ -59,7 +59,7 @@ public class BrandControllerTest {
         resultActions.andDo(
                 print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(Matchers.containsString(Brand.ROCK_ROSE.getBrandName())));
+                .andExpect(content().string(Matchers.containsString(Brand.ROCK_ROSE.getName())));
 
     }
 

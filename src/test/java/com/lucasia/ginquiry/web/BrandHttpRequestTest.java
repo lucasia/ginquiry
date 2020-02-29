@@ -37,8 +37,8 @@ public class BrandHttpRequestTest {
     public void shouldReturnInitialBrands() throws Exception {
         String response = testRestTemplate.getForObject(baseUrl, String.class);
 
-        Assert.assertTrue(response.contains(Brand.HENDRICKS.getBrandName()));
-        Assert.assertTrue(response.contains(Brand.ROCK_ROSE.getBrandName()));
+        Assert.assertTrue(response.contains(Brand.HENDRICKS.getName()));
+        Assert.assertTrue(response.contains(Brand.ROCK_ROSE.getName()));
     }
 
 
@@ -52,7 +52,7 @@ public class BrandHttpRequestTest {
                 request, String.class);
 
         Assert.assertTrue(results.getStatusCode().is2xxSuccessful());
-        Assert.assertTrue(results.getBody().contains(brand.getBrandName()));
+        Assert.assertTrue(results.getBody().contains(brand.getName()));
     }
 
     @Test
@@ -64,14 +64,14 @@ public class BrandHttpRequestTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         final JSONObject brandJson = new JSONObject();
-        brandJson.put("brandId", brand.getBrandId());
-        brandJson.put("brandName", brand.getBrandName());
+        brandJson.put("id", brand.getId());
+        brandJson.put("name", brand.getName());
 
         final HttpEntity<String> request = new HttpEntity<>(brandJson.toString(), headers);
 
         final String results = this.testRestTemplate.postForObject(new URI(baseUrl), request, String.class);
 
         Assert.assertNotNull(results);
-        Assert.assertTrue(results.contains(brand.getBrandName()));
+        Assert.assertTrue(results.contains(brand.getName()));
     }
 }

@@ -9,21 +9,17 @@ public class BoozeTest {
 
     @Test
     public void testBrand() {
-
         Assert.assertEquals(Brand.ROCK_ROSE, new Brand(Brand.BRAND_NAME));
-    }
 
+        Assert.assertThrows(NullPointerException.class, () -> new Brand(null));
+    }
 
     @Test
     public void testBooze() {
-
-        Booze booze = new Booze(1L, new Brand(Brand.BRAND_NAME), Booze.NAME, Booze.DESCRIPTION);
-
-        log.debug(Booze.ROCK_ROSE_WINTER);
-        log.debug(booze);
-
+        final Booze booze = new Booze(1L, new Brand(Brand.BRAND_NAME), Booze.NAME, Booze.DESCRIPTION);
         Assert.assertEquals(Booze.ROCK_ROSE_WINTER, booze);
 
+        Assert.assertThrows(NullPointerException.class, () -> new Booze(null, null, null, null));
     }
 
 }

@@ -1,11 +1,9 @@
 package com.lucasia.ginquiry.domain;
 
 import lombok.Data;
-import lombok.Getter;
+import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -15,14 +13,14 @@ public class Brand {
     public static final Brand ROCK_ROSE = new Brand(BRAND_NAME);
     public static final Brand HENDRICKS = new Brand("Hendrick's");
 
-    @Getter
-    private @Id @GeneratedValue Long brandId;
+    private @Id @GeneratedValue Long id;
 
-    @Getter
-    private String brandName;
+    @NonNull
+    @Column(unique = true)
+    private String name;
 
-    public Brand(String brandName) {
-        this.brandName = brandName;
+    public Brand(@NonNull  String name) {
+        this.name = name;
     }
 
     public Brand() {
