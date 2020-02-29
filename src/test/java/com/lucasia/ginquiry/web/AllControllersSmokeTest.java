@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class ControllerSmokeTest {
+public class AllControllersSmokeTest {
 
     @Autowired
     private BrandController brandController;

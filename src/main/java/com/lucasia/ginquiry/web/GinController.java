@@ -9,17 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(GinController.BRAND_PATH)
 public class GinController extends AbstractController<Booze, Long> {
 
-    private final BoozeRepository boozeRepository;
     public static final String BRAND_PATH = "/gins";
 
-
     public GinController(BoozeRepository boozeRepository) {
-        this.boozeRepository = boozeRepository;
-    }
-
-    @Override
-    public JpaRepository<Booze, Long> getBrandRepository() {
-        return boozeRepository;
+        super(boozeRepository);
     }
 
 }

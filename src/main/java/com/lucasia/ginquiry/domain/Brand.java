@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Brand {
+public class Brand implements Nameable {
 
     public static String BRAND_NAME = "Rock Rose";
     public static final Brand ROCK_ROSE = new Brand(BRAND_NAME);

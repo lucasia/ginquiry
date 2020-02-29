@@ -7,11 +7,14 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Booze {
+public class Booze implements Nameable {
 
-    public static String NAME = "Winter Edition";
-    public static String DESCRIPTION = "A juniper led earthy gin with fragrant pine notes.";
-    public static final Booze ROCK_ROSE_WINTER = new Booze(Brand.ROCK_ROSE, NAME, DESCRIPTION);
+    public static final Booze ROCK_ROSE_SPRING =
+            new Booze(Brand.ROCK_ROSE, "Spring Edition", "A crisp, fresh taste of spring with a long smooth finish");
+
+    public static final Booze ROCK_ROSE_WINTER =
+            new Booze(Brand.ROCK_ROSE, "Winter Edition", "A juniper led earthy gin with fragrant pine notes.");
+
 
     private @Id @GeneratedValue Long id;
 

@@ -10,15 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(BrandController.BRAND_PATH)
 public class BrandController extends AbstractController<Brand, Long> {
 
-    private final BrandRepository brandRepository;
     public static final String BRAND_PATH = "/brands";
 
     public BrandController(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
-
-    @Override
-    public JpaRepository<Brand, Long> getBrandRepository() {
-        return brandRepository;
+        super(brandRepository);
     }
 }
