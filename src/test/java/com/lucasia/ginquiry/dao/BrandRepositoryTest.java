@@ -2,7 +2,7 @@ package com.lucasia.ginquiry.dao;
 
 import com.lucasia.ginquiry.domain.Brand;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +13,11 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 
-//@DataJpaTest
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@AutoConfigureMockMvc
+// TODO: change this to use a mock, not container
+// @AutoConfigureMockMvc
+//@DataJpaTest
 public class BrandRepositoryTest {
 
     @Autowired

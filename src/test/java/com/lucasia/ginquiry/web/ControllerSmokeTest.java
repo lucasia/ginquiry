@@ -6,15 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class BrandControllerSmokeTest {
+public class ControllerSmokeTest {
 
     @Autowired
     private BrandController brandController;
+
+    @Autowired
+    private GinController ginController;
 
     @Test
     public void contextLoads() throws Exception {
 
         Assert.assertNotNull(brandController);
+
+        Assert.assertNotNull(ginController);
     }
 
 }
