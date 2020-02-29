@@ -16,7 +16,7 @@ public class Booze {
     private @Id @GeneratedValue Long id;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
 
     @NonNull
