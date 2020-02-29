@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,18 +35,49 @@ public class BrandControllerTest {
     private BrandRepository brandRepository;
 
     @Test
-    public void shouldReturnBaseGins() throws Exception {
-
+    public void shouldReturnAllGins() throws Exception {
         Mockito.when(brandRepository.findAll()).thenReturn(Arrays.asList(Brand.ROCK_ROSE, Brand.HENDRICKS));
 
         final ResultActions resultActions = this.mockMvc.perform(
                 get(BrandController.BRAND_PATH));
 
         resultActions.andDo(
-                print()).andExpect(
-                status().isOk()).andExpect(
-                content().string(Matchers.containsString(Brand.ROCK_ROSE.getBrandName()))).andExpect(
-                content().string(Matchers.containsString(Brand.HENDRICKS.getBrandName())));
+                print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.containsString(Brand.ROCK_ROSE.getBrandName())))
+                .andExpect(content().string(Matchers.containsString(Brand.HENDRICKS.getBrandName())));
 
     }
+
+    @Test
+    public void shouldReturnOneBrand() throws Exception {
+
+        Mockito.when(brandRepository.findById(1L)).thenReturn(Optional.of(Brand.ROCK_ROSE));
+
+        final ResultActions resultActions = this.mockMvc.perform(
+                get(BrandController.BRAND_PATH + "/1"));
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.containsString(Brand.ROCK_ROSE.getBrandName())));
+
+    }
+
+    @Test
+    public void shouldReturn404WhenBrandNotFound() throws Exception {
+
+        Mockito.when(brandRepository.findById(1L)).thenReturn(Optional.of(Brand.ROCK_ROSE));
+
+        final ResultActions resultActions = this.mockMvc.perform(
+                get(BrandController.BRAND_PATH + "/2"));
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(status().is(404))
+                .andExpect(content().string(Matchers.containsString("not found")));
+
+    }
+
 }
