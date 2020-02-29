@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.dao.web;
+package com.lucasia.ginquiry.web;
 
 import com.lucasia.ginquiry.dao.BrandRepository;
 import com.lucasia.ginquiry.domain.Brand;

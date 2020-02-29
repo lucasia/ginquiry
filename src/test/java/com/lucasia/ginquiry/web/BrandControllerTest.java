@@ -1,7 +1,6 @@
 package com.lucasia.ginquiry.web;
 
 import com.lucasia.ginquiry.dao.BrandRepository;
-import com.lucasia.ginquiry.dao.web.BrandController;
 import com.lucasia.ginquiry.domain.Brand;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;

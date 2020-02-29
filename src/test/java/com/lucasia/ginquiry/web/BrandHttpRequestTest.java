@@ -1,6 +1,5 @@
 package com.lucasia.ginquiry.web;
 
-import com.lucasia.ginquiry.dao.web.BrandController;
 import com.lucasia.ginquiry.domain.Brand;
 import org.json.JSONObject;
 import org.junit.Assert;

@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.dao.web;
+package com.lucasia.ginquiry.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

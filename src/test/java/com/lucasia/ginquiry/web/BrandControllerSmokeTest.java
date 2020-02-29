@@ -1,6 +1,5 @@
 package com.lucasia.ginquiry.web;
 
-import com.lucasia.ginquiry.dao.web.BrandController;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

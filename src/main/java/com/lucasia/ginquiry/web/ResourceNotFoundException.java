@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.dao.web;
+package com.lucasia.ginquiry.web;
 
 public class ResourceNotFoundException extends RuntimeException {
 
