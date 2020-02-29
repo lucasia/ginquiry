@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Log4j2
 @RestController
+@RequestMapping(BrandController.BRAND_PATH)
 public class BrandController {
 
     private final BrandRepository brandRepository;
@@ -21,27 +22,27 @@ public class BrandController {
     }
 
     // aggregate root
-    @GetMapping(BRAND_PATH)
+
+    @GetMapping()
     List<Brand> allBrands(){
         return brandRepository.findAll();
     }
 
-    @PostMapping(BRAND_PATH)
+    @PostMapping()
     Brand newBrand(@RequestBody Brand newBrand) {
         return brandRepository.save(newBrand);
     }
 
     // single item
 
-    @GetMapping("/brands/{id}")
+    @GetMapping("/{id}")
     Brand one(@PathVariable Long id) {
 
         log.debug("finding " + id);
 
         Optional<Brand> byId = brandRepository.findById(id);
 
-        return byId.orElseThrow(() -> new ResourceNotFoundException(id));
-
-    }
+        return byId.orElseThrow(() -> new ResourceNotFoundException(Brand.class, id));
+   }
 
 }
