@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 @Log4j2
-public class BoozeTest {
+public class AllDomainsTest {
 
     @Test
     public void testMissingBrandNameThrowsNullPointerException() {

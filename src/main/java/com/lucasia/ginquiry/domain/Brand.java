@@ -7,6 +7,9 @@ import javax.persistence.*;
 
 @Data
 @Entity
+/*
+    // TODO renamed Brand to distillery?
+ */
 public class Brand implements Nameable {
 
     public static String BRAND_NAME = "Rock Rose";

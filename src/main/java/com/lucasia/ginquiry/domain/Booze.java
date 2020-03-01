@@ -7,6 +7,9 @@ import javax.persistence.*;
 
 @Data
 @Entity
+/*
+ * Need to add Year, Botanical (ingredients), Notes (taste), Geography/Location (Japanese, Highland, Isley)
+ */
 public class Booze implements Nameable {
 
     public static final Booze ROCK_ROSE_SPRING =
