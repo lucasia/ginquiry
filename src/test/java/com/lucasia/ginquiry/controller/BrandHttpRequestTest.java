@@ -34,7 +34,7 @@ public class BrandHttpRequestTest {
     }
 
     @Test
-    public void shouldReturnInitialBrands() throws Exception {
+    public void testFindBootstrappedBrandsViaHttp() throws Exception {
         String response = testRestTemplate.getForObject(baseUrl, String.class);
 
         Assert.assertTrue(response.contains(Brand.HENDRICKS.getName()));
@@ -43,7 +43,7 @@ public class BrandHttpRequestTest {
 
 
     @Test
-    public void shouldAddNewBrand() throws Exception {
+    public void testAddNewViaHttp() throws Exception {
 
         final Brand brand = new Brand(UUID.randomUUID().toString());
 
@@ -56,7 +56,7 @@ public class BrandHttpRequestTest {
     }
 
     @Test
-    public void shouldAddNewBrandWithJson() throws Exception {
+    public void testAddNewViaHttpUsingJson() throws Exception {
 
         final Brand brand = new Brand(UUID.randomUUID().toString());
 

@@ -36,7 +36,7 @@ public class GintHttpRequestTest {
     }
 
     @Test
-    public void shouldReturnInitialBrands() {
+    public void testFindBootstrappedBrandsViaHttp() {
         String response = testRestTemplate.getForObject(ginUrl, String.class);
 
         Assert.assertTrue(response.contains(Booze.ROCK_ROSE_WINTER.getName()));
@@ -45,7 +45,7 @@ public class GintHttpRequestTest {
 
 
     @Test
-    public void shouldAddNewGinExistingBrand() throws Exception {
+    public void testAddNewViaHttp() throws Exception {
 
         final Booze booze = new Booze(Brand.ROCK_ROSE, UUID.randomUUID().toString(), UUID.randomUUID().toString());
 
@@ -59,7 +59,7 @@ public class GintHttpRequestTest {
     }
 
     @Test
-    public void shouldAddNewGinNewBrand() throws Exception {
+    public void testAddNewViaHttpUsingJson() throws Exception {
         // create a new Brand
         final Brand brand = new Brand(UUID.randomUUID().toString());
         final HttpEntity<Brand> brandRequest = new HttpEntity<>(brand, new HttpHeaders());

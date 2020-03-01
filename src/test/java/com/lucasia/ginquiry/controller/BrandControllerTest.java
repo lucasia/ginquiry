@@ -22,12 +22,12 @@ public class BrandControllerTest extends AbstractControllerTest<Brand> {
     }
 
     @Test
-    public void shouldReturnAllGins() throws Exception {
+    public void testFindAll() throws Exception {
         testFindAll(Arrays.asList(Brand.ROCK_ROSE, Brand.HENDRICKS));
     }
 
     @Test
-    public void shouldReturnOneBrand() throws Exception {
+    public void testFindById() throws Exception {
         testFindById(Brand.ROCK_ROSE);
     }
 

@@ -81,6 +81,16 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     }
 
     public void testAddNewSucceeds(T nameable) throws Exception {
+        final ResultActions resultActions = saveEntity(nameable);
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.containsString(nameable.getName())));
+
+    }
+
+    public ResultActions saveEntity(T nameable) throws Exception {
         Mockito.when(getRepository().save(nameable)).thenReturn(nameable);
 
         final String jsonContent = new ObjectMapper().writeValueAsString(nameable);
@@ -90,13 +100,7 @@ public abstract class AbstractControllerTest<T extends Nameable> {
                 .content(jsonContent)
                 .accept(MediaType.APPLICATION_JSON);
 
-        final ResultActions resultActions = mockMvc.perform(requestBuilder);
-
-        resultActions.andDo(
-                print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(Matchers.containsString(nameable.getName())));
-
+        return mockMvc.perform(requestBuilder);
     }
 
 

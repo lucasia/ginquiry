@@ -8,9 +8,11 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.web.util.NestedServletException;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -37,12 +39,12 @@ public class GinControllerTest extends AbstractControllerTest<Booze> {
     }
 
     @Test
-    public void shouldReturnAllGins() throws Exception {
+    public void testFindAll() throws Exception {
         testFindAll(Arrays.asList(Booze.ROCK_ROSE_WINTER, Booze.ROCK_ROSE_SPRING));
     }
 
     @Test
-    public void shouldReturnOneBrand() throws Exception {
+    public void testFindById() throws Exception {
         testFindById(Booze.ROCK_ROSE_WINTER);
     }
 
@@ -51,13 +53,15 @@ public class GinControllerTest extends AbstractControllerTest<Booze> {
         testAddNewSucceeds(new Booze(new Brand(UUID.randomUUID().toString()), UUID.randomUUID().toString(), UUID.randomUUID().toString()));
     }
 
-/*    @Test
-    // TODO:add test for empty Brand
+    @Test
     public void testNewBoozeWithMissingBrandFails() throws Exception {
-        Exception ex = Assert.assertThrows(NullPointerException.class, () -> save(new Booze()));
+        Mockito.when(brandRepository.saveAndFlush(null)).thenThrow(new NullPointerException());
 
-        Assert.assertTrue(ex.getMessage().contains("Saving empty Brand"));
-    }*/
+        // TODO: change to NPE or a named Exception
+        Exception ex = Assert.assertThrows(NestedServletException.class, () -> saveEntity(new Booze()));
+
+        Assert.assertTrue(ex.getMessage().contains("brand is marked non-null but is null"));
+    }
 
     @Override
     public JpaRepository<Booze, Long> getRepository() {
