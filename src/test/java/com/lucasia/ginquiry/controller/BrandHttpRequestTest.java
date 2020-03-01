@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.web;
+package com.lucasia.ginquiry.controller;
 
 import com.lucasia.ginquiry.domain.Brand;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.web;
+package com.lucasia.ginquiry.controller;
 
 public class ResourceNotFoundException extends RuntimeException {
 

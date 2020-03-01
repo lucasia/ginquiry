@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.web;
+package com.lucasia.ginquiry.controller;
 
 import com.lucasia.ginquiry.dao.BoozeRepository;
 import com.lucasia.ginquiry.domain.Booze;
@@ -16,5 +16,5 @@ public class GinController extends AbstractController<Booze, Long>{
     public GinController(BoozeRepository boozeRepository) {
         super(boozeRepository);
     }
-    
+
 }

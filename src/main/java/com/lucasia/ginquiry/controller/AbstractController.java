@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.web;
+package com.lucasia.ginquiry.controller;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;

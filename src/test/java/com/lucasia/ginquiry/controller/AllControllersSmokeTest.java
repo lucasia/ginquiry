@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.web;
+package com.lucasia.ginquiry.controller;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
