@@ -1,6 +1,7 @@
 package com.lucasia.ginquiry.controller;
 
 import com.lucasia.ginquiry.domain.Brand;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +44,7 @@ public class BrandHttpRequestTest {
 
 
     @Test
-    public void testAddNewViaHttp() throws Exception {
+    public void testAddNewBrandViaHttp() throws Exception {
 
         final Brand brand = new Brand(UUID.randomUUID().toString());
 
@@ -56,16 +57,14 @@ public class BrandHttpRequestTest {
     }
 
     @Test
-    public void testAddNewViaHttpUsingJson() throws Exception {
+    public void testAddNewBrandViaHttpUsingJson() throws Exception {
 
         final Brand brand = new Brand(UUID.randomUUID().toString());
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        final JSONObject brandJson = new JSONObject();
-        brandJson.put("id", brand.getId());
-        brandJson.put("name", brand.getName());
+        final JSONObject brandJson = toJsonObject(brand);
 
         final HttpEntity<String> request = new HttpEntity<>(brandJson.toString(), headers);
 
@@ -73,5 +72,16 @@ public class BrandHttpRequestTest {
 
         Assert.assertNotNull(results);
         Assert.assertTrue(results.contains(brand.getName()));
+    }
+
+    /*
+        Creates Json to be posted for example (after -d):
+        curl -X POST localhost:8080/brands -H 'Content-type:application/json' -d '{"name": "Test Brand Name"}'
+     */
+    public static JSONObject toJsonObject(Brand brand) throws JSONException {
+        final JSONObject brandJson = new JSONObject();
+        brandJson.put("id", brand.getId());
+        brandJson.put("name", brand.getName());
+        return brandJson;
     }
 }
