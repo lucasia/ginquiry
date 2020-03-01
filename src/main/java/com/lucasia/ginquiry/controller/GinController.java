@@ -5,10 +5,13 @@ import com.lucasia.ginquiry.dao.BrandRepository;
 import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
 import com.lucasia.ginquiry.service.BoozeService;
+import com.lucasia.ginquiry.service.BoozeServiceImpl;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,52 +22,16 @@ public class GinController extends AbstractController<Booze, Long>{
 
     public static final String GIN_PATH = "/gins";
 
-    private BoozeRepository boozeRepository;
+    private BoozeService boozeService;
 
-    private BrandRepository brandRepository;
-
-
-    public GinController(BoozeRepository boozeRepository, BrandRepository brandRepository) {
+    public GinController(@NonNull BoozeRepository boozeRepository, @NonNull BrandRepository brandRepository) {
         super(boozeRepository);
-        this.brandRepository = brandRepository;
-        this.boozeRepository = boozeRepository;
+        this.boozeService = new BoozeServiceImpl(boozeRepository, brandRepository);
     }
 
-    /*
-    public GinController(BoozeService boozeService) {
-        this.boozeService = boozeService;
+    @PostMapping()
+    Booze newEntity(@RequestBody Booze newEntity) {
+        return boozeService.save(newEntity);
     }
 
-
-    List<Booze> all() {
-        return getRepository().findAll();
-    }
-
-    Booze newEntity(Booze newEntity) {
-        return getRepository().save(newEntity);
-    }
-
-    Booze one(Long aLong) {
-        throw new RuntimeException("not implement");
-
-        //return super.one(aLong);
-    }
-
-    public BoozeRepository getRepository() {
-        return boozeService.getBoozeRepository();
-    }
-
-     */
-
-    public Booze save(@NonNull Booze booze) {
-        Brand brand = booze.getBrand();
-
-        if (brand == null) throw new NullPointerException("Saving empty Brand on " + booze);
-
-        if (brand.getId() == null) {
-            brandRepository.saveAndFlush(brand);
-        }
-
-        return boozeRepository.save(booze);
-    }
 }

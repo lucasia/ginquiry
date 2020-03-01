@@ -29,6 +29,8 @@ public abstract class AbstractController<T, ID> {
 
     @PostMapping()
     T newEntity(@RequestBody T newEntity) {
+        log.debug("persisting new Entity " + newEntity);
+
         return getRepository().save(newEntity);
     }
 

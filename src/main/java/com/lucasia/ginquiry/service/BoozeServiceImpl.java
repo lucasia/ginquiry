@@ -14,7 +14,7 @@ public class BoozeServiceImpl implements BoozeService {
 
     private BrandRepository brandRepository;
 
-    public BoozeServiceImpl(BoozeRepository boozeRepository, BrandRepository brandRepository) {
+    public BoozeServiceImpl(@NonNull BoozeRepository boozeRepository, @NonNull BrandRepository brandRepository) {
         this.boozeRepository = boozeRepository;
         this.brandRepository = brandRepository;
     }
