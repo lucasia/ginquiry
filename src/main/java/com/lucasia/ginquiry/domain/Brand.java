@@ -16,7 +16,7 @@ public class Brand implements Nameable {
     public static final Brand ROCK_ROSE = new Brand(BRAND_NAME);
     public static final Brand HENDRICKS = new Brand("Hendrick's");
 
-    private @Id @GeneratedValue Long id;
+    private @Id @GeneratedValue(generator = "increment") Long id;
 
     @NonNull
     @Column(unique = true)

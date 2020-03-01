@@ -2,11 +2,15 @@ package com.lucasia.ginquiry.dao;
 
 import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.hamcrest.MatcherAssert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
@@ -18,7 +22,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 //@DataJpaTest
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+@Log4j2
 public class BoozeRepositoryTest {
 
     @Autowired
@@ -26,6 +30,8 @@ public class BoozeRepositoryTest {
 
     @Autowired
     private BoozeRepository boozeRepository;
+
+
 
     @Test
     public void testFindAll() {
@@ -43,4 +49,33 @@ public class BoozeRepositoryTest {
         MatcherAssert.assertThat(boozes, hasItem(booze));
     }
 
+    @Test
+    public void testFindBoozeByName() {
+        final Brand brand = new Brand(UUID.randomUUID().toString());
+        Booze booze = new Booze(brand, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+
+        brandRepository.saveAndFlush(brand);
+        boozeRepository.saveAndFlush(booze);
+
+        final Booze foundBooze = boozeRepository.findByName(booze.getName());
+
+        Assert.assertEquals(booze, foundBooze);
+
+        // ensure uniqueness
+        final Booze boozeSameName = new Booze(brand, booze.getName(), UUID.randomUUID().toString());
+        Assert.assertThrows(DataIntegrityViolationException.class, () -> boozeRepository.save(boozeSameName));
+    }
+
+    @Test
+    public void testSavingBoozeWithSameNameThrowsException() {
+        final Brand brand = new Brand(UUID.randomUUID().toString());
+        Booze booze = new Booze(brand, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+
+        brandRepository.saveAndFlush(brand);
+        boozeRepository.saveAndFlush(booze);
+
+        // ensure uniqueness
+        final Booze boozeSameName = new Booze(brand, booze.getName(), UUID.randomUUID().toString());
+        Assert.assertThrows(DataIntegrityViolationException.class, () -> boozeRepository.save(boozeSameName));
+    }
 }

@@ -29,8 +29,6 @@ public class BoozeServiceTest {
 
         Booze resultBooze = save(booze);
 
-        log.info("------------------------------------- " + resultBooze);
-
         Assert.assertNotNull(resultBooze);
         Assert.assertEquals(booze, resultBooze);
     }
@@ -38,16 +36,31 @@ public class BoozeServiceTest {
 
     @Test
     public void testAddNewBoozeWithNewBrandSucceeds() {
-        // create a new Brand
         final Brand brand = new Brand(UUID.randomUUID().toString());
         final Booze booze = new Booze(brand, UUID.randomUUID().toString(), UUID.randomUUID().toString());
 
-        Booze resultBooze = save(booze);
-
-        log.info("------------------------------------- " + resultBooze);
+        final Booze resultBooze = save(booze);
 
         Assert.assertNotNull(resultBooze);
         Assert.assertEquals(booze, resultBooze);
+    }
+
+    @Test
+    public void testAddNewBoozeWithExistingBrandOnlySameNameSucceeds() {
+        final Brand brand = new Brand(UUID.randomUUID().toString());
+        final Booze booze = new Booze(brand, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+
+        final Booze resultBooze = save(booze);
+
+        Assert.assertNotNull(resultBooze);
+        Assert.assertEquals(booze, resultBooze);
+
+        final Booze anotherBoozeSameBrand = new Booze(new Brand(brand.getName()), UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        final Booze resultAnotherBoozeSameBrand = save(anotherBoozeSameBrand);
+
+        Assert.assertEquals(brand, resultAnotherBoozeSameBrand.getBrand());
+        Assert.assertEquals(anotherBoozeSameBrand, resultAnotherBoozeSameBrand);
+
     }
 
     @Test

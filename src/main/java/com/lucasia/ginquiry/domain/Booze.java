@@ -19,7 +19,7 @@ public class Booze implements Nameable {
             new Booze(Brand.ROCK_ROSE, "Winter Edition", "A juniper led earthy gin with fragrant pine notes.");
 
 
-    private @Id @GeneratedValue Long id;
+    private @Id @GeneratedValue(generator = "increment") Long id;
 
     @NonNull
     @ManyToOne(fetch = FetchType.EAGER)

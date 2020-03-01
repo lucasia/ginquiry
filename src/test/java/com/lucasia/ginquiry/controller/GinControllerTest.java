@@ -50,7 +50,11 @@ public class GinControllerTest extends AbstractControllerTest<Booze> {
 
     @Test
     public void testNewSucceeds() throws Exception {
-        testAddNewSucceeds(new Booze(new Brand(UUID.randomUUID().toString()), UUID.randomUUID().toString(), UUID.randomUUID().toString()));
+        final Brand brand = new Brand(UUID.randomUUID().toString());
+
+        Mockito.when(brandRepository.saveAndFlush(brand)).thenReturn(brand);
+
+        testAddNewSucceeds(new Booze(brand, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
     }
 
     @Test

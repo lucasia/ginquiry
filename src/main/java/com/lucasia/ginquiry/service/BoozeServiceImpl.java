@@ -26,10 +26,16 @@ public class BoozeServiceImpl implements BoozeService {
         if (brand == null) throw new NullPointerException("Saving empty Brand on " + booze);
 
         if (brand.getId() == null) {
-            brandRepository.saveAndFlush(brand);
+            booze.setBrand(findOrSaveBrand(brand));
         }
 
         return boozeRepository.save(booze);
+    }
+
+    public Brand findOrSaveBrand(Brand brand) {
+        final Brand persistedBrand = brandRepository.findByName(brand.getName());
+
+        return persistedBrand != null ? persistedBrand : brandRepository.saveAndFlush(brand);
     }
 
     @Override
