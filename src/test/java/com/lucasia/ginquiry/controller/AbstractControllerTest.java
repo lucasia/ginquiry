@@ -23,8 +23,6 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     @Autowired
     private MockMvc mockMvc;
 
-//    private JpaRepository<T, Long> jpaRepository;
-
     private String path;
 
     public AbstractControllerTest(@NonNull String path) {
@@ -32,7 +30,7 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     }
 
 
-    public void shouldReturnAll(List<T> nameableList) throws Exception {
+    public void testFindAll(List<T> nameableList) throws Exception {
         Mockito.when(getRepository().findAll()).thenReturn(nameableList);
 
         final ResultActions resultActions = mockMvc.perform(
@@ -46,7 +44,7 @@ public abstract class AbstractControllerTest<T extends Nameable> {
         }
     }
 
-    public void shouldReturnOne(T nameable) throws Exception {
+    public void testFindById(T nameable) throws Exception {
         Mockito.when(getRepository().findById(1L)).thenReturn(Optional.of(nameable));
 
         final ResultActions resultActions = mockMvc.perform(
@@ -59,7 +57,7 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     }
 
     @Test
-    public void shouldReturn404WhenBrandNotFound() throws Exception {
+    public void testReturn404WhenBrandNotFound() throws Exception {
         final ResultActions resultActions = mockMvc.perform(
                 get(path + "/1"));
 

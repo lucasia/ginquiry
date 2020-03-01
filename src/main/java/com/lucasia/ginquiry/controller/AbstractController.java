@@ -11,10 +11,13 @@ import java.util.Optional;
 @Log4j2
 public abstract class AbstractController<T, ID> {
 
-    private final JpaRepository<T, ID> repository;
+    private JpaRepository<T, ID> repository;
 
     public AbstractController(@NonNull JpaRepository<T, ID> getRepository) {
         this.repository = getRepository;
+    }
+
+    protected AbstractController() {
     }
 
     // aggregate root
