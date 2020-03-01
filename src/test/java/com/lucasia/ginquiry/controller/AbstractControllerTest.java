@@ -1,15 +1,11 @@
 package com.lucasia.ginquiry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lucasia.ginquiry.domain.Booze;
-import com.lucasia.ginquiry.domain.Brand;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.Request;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,11 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.ContentResultMatchers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

@@ -7,6 +7,8 @@ import com.lucasia.ginquiry.domain.Brand;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BoozeServiceImpl implements BoozeService {
 
@@ -25,17 +27,29 @@ public class BoozeServiceImpl implements BoozeService {
 
         if (brand == null) throw new NullPointerException("Saving empty Brand on " + booze);
 
-        if (brand.getId() == null) {
-            booze.setBrand(findOrSaveBrand(brand));
-        }
+        booze.setBrand(findOrSaveBrand(brand));
 
         return boozeRepository.save(booze);
     }
 
-    public Brand findOrSaveBrand(Brand brand) {
-        final Brand persistedBrand = brandRepository.findByName(brand.getName());
+    @Override
+    public List<Booze> saveAll(Iterable<Booze> boozeList) {
 
-        return persistedBrand != null ? persistedBrand : brandRepository.saveAndFlush(brand);
+        // first find or save the brands
+        // TODO: this will be slow with a large list of Booze.  could (should) be batched.
+        for (Booze booze : boozeList) {
+            booze.setBrand(findOrSaveBrand(booze.getBrand()));
+        }
+
+        return boozeRepository.saveAll(boozeList);
+    }
+
+    public Brand findOrSaveBrand(Brand brand) {
+        if (brand.getId() != null) return brand; // we have the persistent Brand already
+
+        final Brand persistedBrand = brandRepository.findByName(brand.getName()); // check the db if Brand exists
+
+        return persistedBrand != null ? persistedBrand : brandRepository.saveAndFlush(brand); // return existing or newly persisted Brand
     }
 
     @Override
@@ -43,5 +57,8 @@ public class BoozeServiceImpl implements BoozeService {
         return boozeRepository;
     }
 
-
+    @Override
+    public BrandRepository getBrandRepository() {
+        return brandRepository;
+    }
 }

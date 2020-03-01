@@ -17,29 +17,23 @@ import java.util.List;
 public class LoadDatabase {
 
     @Bean
-    CommandLineRunner initDatbase(BoozeService boozeService, BrandRepository brandRepository) {
+    CommandLineRunner initDatbase(BoozeService boozeService) {
         return args -> {
 
 
             final List<Brand> brands = Arrays.asList(Brand.HENDRICKS, Brand.ROCK_ROSE);
-
             try {
-                brandRepository.saveAll(brands);
+                boozeService.getBrandRepository().saveAll(brands);
             } catch (Exception e) {
                 log.warn("Preloading failed!! Unable to load " + Arrays.toString(brands.toArray()));
             }
 
-            // save these individually
-            try {
-                boozeService.save(Booze.ROCK_ROSE_SPRING);
-            } catch (Exception e) {
-                log.warn("Preloading failed!! Unable to load " + Booze.ROCK_ROSE_SPRING);
-            }
 
+            final List<Booze> gins = Arrays.asList(Booze.ROCK_ROSE_SPRING, Booze.ROCK_ROSE_WINTER);
             try {
-                boozeService.save(Booze.ROCK_ROSE_WINTER);
+                boozeService.saveAll(gins);
             } catch (Exception e) {
-                log.warn("Preloading failed!! Unable to load " + Booze.ROCK_ROSE_WINTER);
+                log.warn("Preloading failed!! Unable to load " + Arrays.toString(gins.toArray()));
             }
 
         };

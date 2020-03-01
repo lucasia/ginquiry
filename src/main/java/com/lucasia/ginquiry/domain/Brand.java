@@ -10,13 +10,14 @@ import javax.persistence.*;
 /*
     // TODO renamed Brand to distillery?
  */
+@SequenceGenerator(name="brand_generator", sequenceName = "brand_seq", allocationSize=50)
 public class Brand implements Nameable {
 
     public static String BRAND_NAME = "Rock Rose";
     public static final Brand ROCK_ROSE = new Brand(BRAND_NAME);
     public static final Brand HENDRICKS = new Brand("Hendrick's");
 
-    private @Id @GeneratedValue(generator = "increment") Long id;
+    @Id @GeneratedValue private Long id;
 
     @NonNull
     @Column(unique = true)
