@@ -1,6 +1,5 @@
 package com.lucasia.ginquiry.dao;
 
-import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
