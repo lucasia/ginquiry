@@ -1,20 +1,22 @@
 package com.lucasia.ginquiry.controller;
 
-import lombok.NonNull;
+import com.lucasia.ginquiry.Client;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
 
 @Log4j2
-public abstract class AbstractController<T, ID> {
+public abstract class AbstractController<T, ID extends Long> {
 
-    private JpaRepository<T, ID> repository;
+    private Client<T, ID> client;
 
-    public AbstractController(@NonNull JpaRepository<T, ID> getRepository) {
-        this.repository = getRepository;
+    public AbstractController(Client<T, ID> client) {
+        this.client = client;
     }
 
     protected AbstractController() {
@@ -24,14 +26,14 @@ public abstract class AbstractController<T, ID> {
 
     @GetMapping()
     List<T> all(){
-        return getRepository().findAll();
+        return getClient().findAll();
     }
 
     @PostMapping()
     T newEntity(@RequestBody T newEntity) {
         log.debug("persisting new Entity " + newEntity);
 
-        return getRepository().save(newEntity);
+        return getClient().save(newEntity);
     }
 
     // single item
@@ -41,13 +43,20 @@ public abstract class AbstractController<T, ID> {
 
         log.debug("finding " + id);
 
-        Optional<T> byId = getRepository().findById(id);
+        final T entity = getClient().findById(id);
+
+        if (entity == null) throw new ResourceNotFoundException(id);
+
+        return entity;
+
+/*
+        Optional<T> byId = getClient().findById(id);
 
         return byId.orElseThrow(() -> new ResourceNotFoundException(id));
+*/
    }
 
-
-    public JpaRepository<T, ID> getRepository() {
-        return repository;
+    public Client<T, ID> getClient() {
+        return client;
     }
 }

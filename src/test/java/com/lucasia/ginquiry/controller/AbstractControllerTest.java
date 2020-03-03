@@ -1,6 +1,7 @@
 package com.lucasia.ginquiry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucasia.ginquiry.Client;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -51,7 +52,8 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     }
 
     public void testFindById(T nameable) throws Exception {
-        Mockito.when(getRepository().findById(1L)).thenReturn(Optional.of(nameable));
+        // Mockito.when(getRepository().findById(1L)).thenReturn(Optional.of(nameable));
+        Mockito.when(getRepository().findById(1L)).thenReturn(nameable);
 
         final ResultActions resultActions = mockMvc.perform(
                 get(path + "/1"));
@@ -98,6 +100,6 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     }
 
 
-    public abstract JpaRepository<T, Long> getRepository();
+    public abstract Client<T, Long> getRepository();
 
 }

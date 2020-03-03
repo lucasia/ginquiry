@@ -1,6 +1,7 @@
 package com.lucasia.ginquiry.controller;
 
-import com.lucasia.ginquiry.dao.BrandRepository;
+import com.lucasia.ginquiry.BrandClient;
+import com.lucasia.ginquiry.Client;
 import com.lucasia.ginquiry.domain.Brand;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,8 +15,7 @@ import java.util.UUID;
 public class BrandControllerTest extends AbstractControllerTest<Brand> {
 
     @MockBean
-    private BrandRepository brandRepository;
-
+    private BrandClient brandClient;
 
     public BrandControllerTest() {
         super(BrandController.BRAND_PATH);
@@ -36,8 +36,8 @@ public class BrandControllerTest extends AbstractControllerTest<Brand> {
         testAddNewSucceeds(new Brand(UUID.randomUUID().toString()));
     }
 
-    public BrandRepository getRepository() {
-        return brandRepository;
+    @Override
+    public Client<Brand, Long> getRepository() {
+        return brandClient;
     }
-
 }

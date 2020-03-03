@@ -1,17 +1,17 @@
 package com.lucasia.ginquiry.controller;
 
-import com.lucasia.ginquiry.dao.BoozeRepository;
-import com.lucasia.ginquiry.dao.BrandRepository;
+import com.lucasia.ginquiry.BoozeClient;
+import com.lucasia.ginquiry.BrandClient;
+import com.lucasia.ginquiry.Client;
 import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.util.NestedServletException;
 
 import java.util.Arrays;
@@ -23,15 +23,14 @@ import java.util.UUID;
 public class GinControllerTest extends AbstractControllerTest<Booze> {
 
     @MockBean
-    private BoozeRepository boozeRepository;
+    private BoozeClient boozeClient;
 
     @MockBean
-    private BrandRepository brandRepository;
-
+    private BrandClient brandClient;
 
     @BeforeEach
     void setUp() {
-        Assert.assertNotNull(boozeRepository);
+        Assertions.assertNotNull(boozeClient);
     }
 
     public GinControllerTest() {
@@ -52,24 +51,23 @@ public class GinControllerTest extends AbstractControllerTest<Booze> {
     public void testNewSucceeds() throws Exception {
         final Brand brand = new Brand(UUID.randomUUID().toString());
 
-        Mockito.when(brandRepository.saveAndFlush(brand)).thenReturn(brand);
+        Mockito.when(brandClient.save(brand)).thenReturn(brand);
 
         testAddNewSucceeds(new Booze(brand, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
     }
 
     @Test
     public void testNewBoozeWithMissingBrandFails() throws Exception {
-        Mockito.when(brandRepository.saveAndFlush(null)).thenThrow(new NullPointerException());
+        Mockito.when(brandClient.save(null)).thenThrow(new NullPointerException());
 
         // TODO: change to NPE or a named Exception
-        Exception ex = Assert.assertThrows(NestedServletException.class, () -> saveEntity(new Booze()));
+        Exception ex = Assertions.assertThrows(NestedServletException.class, () -> saveEntity(new Booze()));
 
-        Assert.assertTrue(ex.getMessage().contains("brand is marked non-null but is null"));
+        Assertions.assertTrue(ex.getMessage().contains("brand is marked non-null but is null"));
     }
 
     @Override
-    public JpaRepository<Booze, Long> getRepository() {
-        return boozeRepository;
+    public Client<Booze, Long> getRepository() {
+        return boozeClient;
     }
-
 }
