@@ -2,7 +2,7 @@ package com.lucasia.ginquiry.domain;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 @Log4j2
 public class AllDomainsTest {
