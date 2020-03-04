@@ -39,7 +39,7 @@
 		</dependency>
 		<!-- end front-end -->
 
-		<!-- server size -->
+		<!-- server side -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -57,7 +57,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- end server size -->
+		<!-- end server sizd -->
 
 
 		<!-- test dependencies -->

@@ -1,7 +1,7 @@
 package com.lucasia.ginquiry.controller;
 
-import com.lucasia.ginquiry.Client;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +13,10 @@ import java.util.Optional;
 @Log4j2
 public abstract class AbstractController<T, ID extends Long> {
 
-    private Client<T, ID> client;
+    private JpaRepository<T, ID> repository;
 
-    public AbstractController(Client<T, ID> client) {
-        this.client = client;
+    public AbstractController(JpaRepository<T, ID> repository) {
+        this.repository = repository;
     }
 
     protected AbstractController() {
@@ -26,14 +26,14 @@ public abstract class AbstractController<T, ID extends Long> {
 
     @GetMapping()
     List<T> all(){
-        return getClient().findAll();
+        return getRepository().findAll();
     }
 
     @PostMapping()
     T newEntity(@RequestBody T newEntity) {
         log.debug("persisting new Entity " + newEntity);
 
-        return getClient().save(newEntity);
+        return getRepository().save(newEntity);
     }
 
     // single item
@@ -43,20 +43,12 @@ public abstract class AbstractController<T, ID extends Long> {
 
         log.debug("finding " + id);
 
-        final T entity = getClient().findById(id);
-
-        if (entity == null) throw new ResourceNotFoundException(id);
-
-        return entity;
-
-/*
-        Optional<T> byId = getClient().findById(id);
+        Optional<T> byId = getRepository().findById(id);
 
         return byId.orElseThrow(() -> new ResourceNotFoundException(id));
-*/
    }
 
-    public Client<T, ID> getClient() {
-        return client;
+    public JpaRepository<T, ID> getRepository() {
+        return repository;
     }
 }
