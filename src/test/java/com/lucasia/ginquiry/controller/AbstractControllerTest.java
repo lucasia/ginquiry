@@ -51,7 +51,6 @@ public abstract class AbstractControllerTest<T extends Nameable> {
     }
 
     public void testFindById(T nameable) throws Exception {
-        // Mockito.when(getRepository().findById(1L)).thenReturn(Optional.of(nameable));
         Mockito.when(getRepository().findById(1L)).thenReturn(Optional.ofNullable(nameable));
 
         final ResultActions resultActions = mockMvc.perform(
