@@ -19,9 +19,9 @@ import java.util.Arrays;
 import java.util.UUID;
 
 
-@WebMvcTest(GinController.class) // run without the server
+@WebMvcTest(GinCrudController.class) // run without the server
 @Log4j2
-public class GinControllerTest extends AbstractControllerTest<Booze> {
+public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
 
     @MockBean
     private BrandRepository brandRepository;
@@ -39,7 +39,7 @@ public class GinControllerTest extends AbstractControllerTest<Booze> {
     }
 
     public GinControllerTest() {
-        super(GinController.GIN_PATH);
+        super(GinCrudController.GIN_PATH);
     }
 
     @Test

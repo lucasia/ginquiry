@@ -1,5 +1,6 @@
 package com.lucasia.ginquiry.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 /*
  * Need to add Year, Botanical (ingredients), Notes (taste), Geography/Location (Japanese, Highland, Isley)
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Booze implements Nameable {
 
     public static final Booze ROCK_ROSE_SPRING =

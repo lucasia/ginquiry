@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class AllControllersSmokeTest {
 
     @Autowired
-    private BrandController brandController;
+    private BrandCrudController brandController;
 
     @Autowired
-    private GinController ginController;
+    private GinCrudController ginController;
 
     @Test
     public void contextLoads() throws Exception {

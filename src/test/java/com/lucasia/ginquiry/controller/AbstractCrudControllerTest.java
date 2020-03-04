@@ -24,14 +24,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Log4j2
-public abstract class AbstractControllerTest<T extends Nameable> {
+public abstract class AbstractCrudControllerTest<T extends Nameable> {
 
     @Autowired
     private MockMvc mockMvc;
 
     private String path;
 
-    public AbstractControllerTest(@NonNull String path) {
+    public AbstractCrudControllerTest(@NonNull String path) {
         this.path = path;
     }
 

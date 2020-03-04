@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(GinController.GIN_PATH)
+@RequestMapping(GinCrudController.GIN_PATH)
 @Log4j2
 /*
     curl -X POST localhost:8080/gins -H 'Content-type:application/json' -d \
         '{"name":"A Booze Name","description":"Test Booze Description","brand":{"name":"A Brand Name"}}'
  */
-public class GinController extends AbstractController<Booze, Long> {
+public class GinCrudController extends AbstractCrudController<Booze, Long> {
 
     public static final String GIN_PATH = "/gins";
 
     private BoozeService boozeService;
 
-    public GinController(@NonNull BoozeRepository boozeRepository, @NonNull BrandRepository brandRepository) {
+    public GinCrudController(@NonNull BoozeRepository boozeRepository, @NonNull BrandRepository brandRepository) {
         super(boozeRepository);
 
         this.boozeService = new BoozeServiceImpl(boozeRepository, brandRepository);

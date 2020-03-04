@@ -11,14 +11,14 @@ import java.util.Arrays;
 import java.util.UUID;
 
 
-@WebMvcTest(BrandController.class) // run without the server
-public class BrandControllerTest extends AbstractControllerTest<Brand> {
+@WebMvcTest(BrandCrudController.class) // run without the server
+public class BrandCrudControllerTest extends AbstractCrudControllerTest<Brand> {
 
     @MockBean
     private BrandRepository repository;
 
-    public BrandControllerTest() {
-        super(BrandController.BRAND_PATH);
+    public BrandCrudControllerTest() {
+        super(BrandCrudController.BRAND_PATH);
     }
 
     @Test

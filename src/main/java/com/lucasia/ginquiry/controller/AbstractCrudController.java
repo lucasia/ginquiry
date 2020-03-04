@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Log4j2
-public abstract class AbstractController<T, ID extends Long> {
+public abstract class AbstractCrudController<T, ID extends Long> {
 
     private JpaRepository<T, ID> repository;
 
-    public AbstractController(JpaRepository<T, ID> repository) {
+    public AbstractCrudController(JpaRepository<T, ID> repository) {
         this.repository = repository;
     }
 
-    protected AbstractController() {
+    protected AbstractCrudController() {
     }
 
     // aggregate root
@@ -51,4 +51,6 @@ public abstract class AbstractController<T, ID extends Long> {
     public JpaRepository<T, ID> getRepository() {
         return repository;
     }
+
+
 }

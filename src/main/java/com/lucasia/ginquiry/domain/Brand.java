@@ -1,5 +1,6 @@
 package com.lucasia.ginquiry.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 /*
     // TODO renamed Brand to distillery?
  */
-@SequenceGenerator(name="brand_generator", sequenceName = "brand_seq", allocationSize=50)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Brand implements Nameable {
 
     public static String BRAND_NAME = "Rock Rose";
