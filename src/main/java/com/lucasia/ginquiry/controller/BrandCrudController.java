@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(BrandCrudController.BRAND_PATH)
 @Log4j2
 /*
-    curl -X POST localhost:8080/brands -H 'Content-type:application/json' -d '{"name": "A Brand Name"}'
+    curl -v localhost:8081/gins
+
+    curl -X POST localhost:8081/brands -H 'Content-type:application/json' -d '{"name": "A Brand Name"}'
  */
 public class BrandCrudController extends AbstractCrudController<Brand, Long> {
 

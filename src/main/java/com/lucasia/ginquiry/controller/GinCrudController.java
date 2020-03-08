@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(GinCrudController.GIN_PATH)
 @Log4j2
 /*
-    curl -X POST localhost:8080/gins -H 'Content-type:application/json' -d \
+   curl -v localhost:8081/gins
+
+    curl -X POST localhost:8081/gins -H 'Content-type:application/json' -d \
         '{"name":"A Booze Name","description":"Test Booze Description","brand":{"name":"A Brand Name"}}'
  */
 public class GinCrudController extends AbstractCrudController<Booze, Long> {
