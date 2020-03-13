@@ -2,11 +2,15 @@ package com.lucasia.ginquiry.dao;
 
 import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
+import com.lucasia.ginquiry.domain.User;
 import com.lucasia.ginquiry.service.BoozeService;
+import com.lucasia.ginquiry.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,11 +18,31 @@ import java.util.List;
 @Configuration
 @Log4j2
 public class LoadDatabase {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
-    CommandLineRunner initDatbase(BoozeService boozeService) {
+    CommandLineRunner initUsers(UserService userService) {
         return args -> {
 
+            String password = passwordEncoder().encode("guest");
+            final User user1 = new User("guest", password, true);
+
+            final List<User> users = Arrays.asList(user1);
+            try {
+                userService.getUserRepository().saveAll(users);
+            } catch (Exception e) {
+                log.warn("Preloading failed!! Unable to load " + Arrays.toString(users.toArray()));
+            }
+
+        };
+    }
+
+    @Bean
+    CommandLineRunner initGins(BoozeService boozeService) {
+        return args -> {
 
             final List<Brand> brands = Arrays.asList(Brand.HENDRICKS, Brand.ROCK_ROSE);
             try {

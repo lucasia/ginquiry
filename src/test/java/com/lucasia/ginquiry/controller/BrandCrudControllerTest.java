@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -32,6 +33,7 @@ public class BrandCrudControllerTest extends AbstractCrudControllerTest<Brand> {
     }
 
     @Test
+    @WithMockUser("guest")
     public void testNewSucceeds() throws Exception {
         testAddNewSucceeds(new Brand(UUID.randomUUID().toString()));
     }

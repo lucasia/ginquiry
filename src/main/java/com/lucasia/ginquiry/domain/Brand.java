@@ -21,7 +21,7 @@ public class Brand implements Nameable {
     @Id @GeneratedValue private Long id;
 
     @NonNull
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     public Brand(@NonNull  String name) {
