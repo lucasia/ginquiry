@@ -11,7 +11,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class User {
+public class User implements Nameable {
 
     @Id @GeneratedValue private Long id;
 
@@ -34,4 +34,8 @@ public class User {
     public User() {
     }
 
+    @Override
+    public String getName() {
+        return username;
+    }
 }
