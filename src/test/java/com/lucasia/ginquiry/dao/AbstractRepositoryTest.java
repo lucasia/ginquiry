@@ -22,10 +22,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 // TODO: change this to use a mock, not container
 // @AutoConfigureMockMvc
 //@DataJpaTest
-public abstract class AbstractRepositoryTest<T extends Nameable> {
-
-    public AbstractRepositoryTest() {
-    }
+public abstract class AbstractRepositoryTest<T extends Nameable, R extends JpaRepository<T, Long> & NameableRepository<T>> {
 
     @Test
     public void testFindAll() {
@@ -67,10 +64,11 @@ public abstract class AbstractRepositoryTest<T extends Nameable> {
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> getRepository().save(entitySameName));
     }
 
-    public abstract JpaRepository<T, Long> getRepository();
+    public abstract R getRepository();
 
-    // TODO: ugly, should be just one repository
-    public abstract NameableRepository<T, Long> getNameableRepository();
+    public R getNameableRepository() {
+        return getRepository();
+    }
 
     public T newInstanceRandomName() {
         return newInstance(UUID.randomUUID().toString());

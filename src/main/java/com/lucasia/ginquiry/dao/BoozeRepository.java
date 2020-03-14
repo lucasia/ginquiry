@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface BoozeRepository extends JpaRepository<Booze, Long>, NameableRepository<Booze, Long> {
+public interface BoozeRepository extends JpaRepository<Booze, Long>, NameableRepository<Booze> {
 
     @Query("SELECT booze FROM Booze booze where booze.name = :name")
     Booze findByName(@Param("name") String name);

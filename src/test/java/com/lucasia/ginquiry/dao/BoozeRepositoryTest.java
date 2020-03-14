@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 
 @DataJpaTest
 @Log4j2
-public class BoozeRepositoryTest extends AbstractRepositoryTest<Booze>{
+public class BoozeRepositoryTest extends AbstractRepositoryTest<Booze, BoozeRepository>{
 
     @Autowired
     private BrandRepository brandRepository;
@@ -29,13 +29,9 @@ public class BoozeRepositoryTest extends AbstractRepositoryTest<Booze>{
     @Autowired
     private BoozeRepository boozeRepository;
 
-    @Override
-    public JpaRepository<Booze, Long> getRepository() {
-        return boozeRepository;
-    }
 
     @Override
-    public NameableRepository<Booze, Long> getNameableRepository() {
+    public BoozeRepository getRepository() {
         return boozeRepository;
     }
 

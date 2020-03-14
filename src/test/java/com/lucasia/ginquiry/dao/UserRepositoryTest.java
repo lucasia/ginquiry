@@ -6,18 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public class UserRepositoryTest extends AbstractRepositoryTest<User>{
+public class UserRepositoryTest extends AbstractRepositoryTest<User, UserRepository>{
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public JpaRepository<User, Long> getRepository() {
-        return userRepository;
-    }
-
-    @Override
-    public NameableRepository<User, Long> getNameableRepository() {
+    public UserRepository getRepository() {
         return userRepository;
     }
 

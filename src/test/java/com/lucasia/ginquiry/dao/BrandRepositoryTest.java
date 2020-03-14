@@ -16,18 +16,13 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 
-public class BrandRepositoryTest extends AbstractRepositoryTest<Brand>{
+public class BrandRepositoryTest extends AbstractRepositoryTest<Brand, BrandRepository>{
 
     @Autowired
     private BrandRepository brandRepository;
 
     @Override
-    public JpaRepository<Brand, Long> getRepository() {
-        return brandRepository;
-    }
-
-    @Override
-    public NameableRepository<Brand, Long> getNameableRepository() {
+    public BrandRepository getRepository() {
         return brandRepository;
     }
 
