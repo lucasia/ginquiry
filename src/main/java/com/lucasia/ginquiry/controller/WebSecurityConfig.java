@@ -10,17 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
+    // TODO: add authorization: http.authorizeRequests().antMatchers(&quot;/**&quot;).hasRole(&quot;USER&quot;).and().httpBasic();
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()// TODO: replace by passing in Cross Site Request Forgery token
                                 // see https://spring.io/blog/2013/08/21/spring-security-3-2-0-rc1-highlights-csrf-protection/
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
+                    .antMatchers("/principal").permitAll()
                     .anyRequest().authenticated()
-                    .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
                     .and()
                 .httpBasic()
                     .and()
