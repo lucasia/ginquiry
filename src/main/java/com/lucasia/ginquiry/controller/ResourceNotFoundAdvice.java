@@ -1,5 +1,6 @@
 package com.lucasia.ginquiry.controller;
 
+import com.lucasia.ginquiry.util.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
