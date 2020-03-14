@@ -5,6 +5,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static com.lucasia.ginquiry.controller.UserController.PRINCIPAL_PATH;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -16,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()// TODO: replace by passing in Cross Site Request Forgery token
                                 // see https://spring.io/blog/2013/08/21/spring-security-3-2-0-rc1-highlights-csrf-protection/
                 .authorizeRequests()
-                    .antMatchers("/principal").permitAll()
+                    .antMatchers(PRINCIPAL_PATH).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .httpBasic()

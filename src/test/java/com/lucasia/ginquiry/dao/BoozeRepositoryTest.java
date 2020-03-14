@@ -27,8 +27,6 @@ public class BoozeRepositoryTest {
     @Autowired
     private BoozeRepository boozeRepository;
 
-
-
     @Test
     public void testFindAll() {
         final Brand brand = new Brand(UUID.randomUUID().toString());
