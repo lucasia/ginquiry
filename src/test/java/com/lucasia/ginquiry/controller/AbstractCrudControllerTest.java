@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
-import net.bytebuddy.asm.Advice;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.hamcrest.text.IsEmptyString;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +15,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -31,11 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Log4j2
-@WithMockUser("guest")
 public abstract class AbstractCrudControllerTest<T extends Nameable> {
 
-    @Autowired
-    private WebApplicationContext context;
+    public static final String GUEST_USER = "guest";
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,11 +37,6 @@ public abstract class AbstractCrudControllerTest<T extends Nameable> {
 
     public AbstractCrudControllerTest(@NonNull String path) {
         this.path = path;
-    }
-
-    @BeforeEach
-    void setUp() {
-//        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 
     public void testFindAll(List<T> nameableList) throws Exception {
@@ -78,15 +66,27 @@ public abstract class AbstractCrudControllerTest<T extends Nameable> {
     }
 
     @Test
-    public void testReturn404WhenBrandNotFound() throws Exception {
+    @WithMockUser(GUEST_USER)
+    public void testReturn404WhenResourceNotFound() throws Exception {
         final ResultActions resultActions = mockMvc.perform(
                 get(path + "/1"));
 
         resultActions.andDo(
                 print())
                 .andExpect(status().is4xxClientError())
-                .andExpect(status().is(404))
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(Matchers.containsString("not found")));
+    }
+
+    @Test
+    public void testReturn401WhenNotLoggedIn() throws Exception {
+        final ResultActions resultActions = mockMvc.perform(get(path));
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string(IsEmptyString.emptyString()));
     }
 
     public void testAddNewSucceeds(T nameable) throws Exception {

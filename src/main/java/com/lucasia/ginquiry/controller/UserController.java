@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/principal")
+@RequestMapping(UserController.PRINCIPAL_PATH)
 public class UserController {
+
+    public static final String PRINCIPAL_PATH = "/principal";
 
     @GetMapping
     public Principal retrievePrincipal(Principal principal) {

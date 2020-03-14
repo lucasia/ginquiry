@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.util.NestedServletException;
 
 import java.util.Arrays;
@@ -43,16 +44,19 @@ public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
     }
 
     @Test
+    @WithMockUser(GUEST_USER)
     public void testFindAll() throws Exception {
         testFindAll(Arrays.asList(Booze.ROCK_ROSE_WINTER, Booze.ROCK_ROSE_SPRING));
     }
 
     @Test
+    @WithMockUser(GUEST_USER)
     public void testFindById() throws Exception {
         testFindById(Booze.ROCK_ROSE_WINTER);
     }
 
     @Test
+    @WithMockUser(GUEST_USER)
     public void testNewSucceeds() throws Exception {
         final Brand brand = new Brand(UUID.randomUUID().toString());
 
@@ -62,6 +66,7 @@ public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
     }
 
     @Test
+    @WithMockUser(GUEST_USER)
     public void testNewBoozeWithMissingBrandFails() throws Exception {
         Mockito.when(brandRepository.save(null)).thenThrow(new NullPointerException());
 

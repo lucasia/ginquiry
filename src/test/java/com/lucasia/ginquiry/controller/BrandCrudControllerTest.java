@@ -23,17 +23,19 @@ public class BrandCrudControllerTest extends AbstractCrudControllerTest<Brand> {
     }
 
     @Test
+    @WithMockUser(GUEST_USER)
     public void testFindAll() throws Exception {
         testFindAll(Arrays.asList(Brand.ROCK_ROSE, Brand.HENDRICKS));
     }
 
     @Test
+    @WithMockUser(GUEST_USER)
     public void testFindById() throws Exception {
         testFindById(Brand.ROCK_ROSE);
     }
 
     @Test
-    @WithMockUser("guest")
+    @WithMockUser(GUEST_USER)
     public void testNewSucceeds() throws Exception {
         testAddNewSucceeds(new Brand(UUID.randomUUID().toString()));
     }
