@@ -27,10 +27,10 @@ public class LoadDatabase {
     CommandLineRunner initUsers(UserService userService) {
         return args -> {
 
-            String password = passwordEncoder().encode("guest");
-            final User user1 = new User("guest", password, true);
+            final User guestUser = new User("guest", passwordEncoder().encode("guest"), true);
+            final User writeUser = new User("ginquiry_write", passwordEncoder().encode("ginquiry_write"), true);
 
-            final List<User> users = Arrays.asList(user1);
+            final List<User> users = Arrays.asList(guestUser, writeUser);
             try {
                 userService.getUserRepository().saveAll(users);
             } catch (Exception e) {
