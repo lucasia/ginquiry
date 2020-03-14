@@ -31,7 +31,7 @@ public abstract class AbstractRepositoryTest<T extends Nameable> {
     public void testFindAll() {
         final T entity = newInstanceRandomName();
 
-        getRepository().save(entity);
+        saveEntity(entity);
 
         List<T> entities = getRepository().findAll();
 
@@ -45,10 +45,14 @@ public abstract class AbstractRepositoryTest<T extends Nameable> {
     public void testFindEntityByName() {
         final T entity = newInstanceRandomName();
 
-        getRepository().save(entity);
+        saveEntity(entity);
 
         T resultEntity = getNameableRepository().findByName(entity.getName());
         Assertions.assertEquals(entity, resultEntity);
+    }
+
+    public void saveEntity(T entity) {
+        getRepository().save(entity);
     }
 
     @Test
@@ -56,7 +60,7 @@ public abstract class AbstractRepositoryTest<T extends Nameable> {
     public void testSavingEntityWithSameNameThrowsException() {
         final T entity = newInstanceRandomName();
 
-        getRepository().save(entity);
+        saveEntity(entity);
 
         // ensure entity name is unique
         final T entitySameName = newInstance(entity.getName());
