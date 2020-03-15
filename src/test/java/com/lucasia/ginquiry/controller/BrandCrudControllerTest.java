@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 @WebMvcTest(BrandCrudController.class) // run without the server
-public class BrandCrudControllerTest extends AbstractCrudControllerTest<Brand> {
+public class BrandCrudControllerTest extends AbstractCrudControllerTest<Brand, BrandRepository> {
 
     @MockBean
     private BrandRepository repository;
@@ -36,12 +36,18 @@ public class BrandCrudControllerTest extends AbstractCrudControllerTest<Brand> {
 
     @Test
     @WithMockUser(GUEST_USER)
+    public void testFindByName() throws Exception {
+        testFindByName(Brand.ROCK_ROSE);
+    }
+
+    @Test
+    @WithMockUser(GUEST_USER)
     public void testNewSucceeds() throws Exception {
         testAddNewSucceeds(new Brand(UUID.randomUUID().toString()));
     }
 
     @Override
-    public JpaRepository<Brand, Long> getRepository() {
+    public BrandRepository getRepository() {
         return repository;
     }
 }

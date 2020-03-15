@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @WebMvcTest(GinCrudController.class) // run without the server
 @Log4j2
-public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
+public class GinControllerTest extends AbstractCrudControllerTest<Booze, BoozeRepository> {
 
     @MockBean
     private BrandRepository brandRepository;
@@ -77,7 +77,7 @@ public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
     }
 
     @Override
-    public JpaRepository<Booze, Long> getRepository() {
+    public BoozeRepository getRepository() {
         return boozeRepository;
     }
 }

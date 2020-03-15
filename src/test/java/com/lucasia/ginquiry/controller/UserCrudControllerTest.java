@@ -15,7 +15,7 @@ import java.util.UUID;
 
 
 @WebMvcTest(UserCrudController.class) // run without the server
-public class UserCrudControllerTest extends AbstractCrudControllerTest<User> {
+public class UserCrudControllerTest extends AbstractCrudControllerTest<User, UserRepository> {
 
     @MockBean
     private UserRepository repository;
@@ -46,7 +46,7 @@ public class UserCrudControllerTest extends AbstractCrudControllerTest<User> {
     }
 
     @Override
-    public JpaRepository<User, Long> getRepository() {
+    public UserRepository getRepository() {
         return repository;
     }
 

@@ -11,14 +11,12 @@ import java.util.List;
 @RestController
 @Controller
 @RequestMapping(UserCrudController.USER_PATH)
-    /*
-    curl -v localhost:8081/gins
+/*
+    curl -v localhost:8081/users
+*/
+public class UserCrudController extends AbstractCrudController<User, Long, UserRepository> {
 
-    curl -X POST localhost:8081/brands -H 'Content-type:application/json' -d '{"name": "A Brand Name"}'
- */
-public class UserCrudController extends AbstractCrudController<User, Long> {
-
-    public static final String USER_PATH = "/user";
+    public static final String USER_PATH = "/users";
 
     public UserCrudController(UserRepository userRepository) {
         super(userRepository);

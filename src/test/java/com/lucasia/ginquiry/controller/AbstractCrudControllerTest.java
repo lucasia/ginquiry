@@ -1,6 +1,7 @@
 package com.lucasia.ginquiry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucasia.ginquiry.dao.NameableRepository;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Log4j2
-public abstract class AbstractCrudControllerTest<T extends Nameable> {
+public abstract class AbstractCrudControllerTest<T extends Nameable, R extends JpaRepository<T, Long> & NameableRepository<T>>{
 
     public static final String GUEST_USER = "guest";
 
@@ -65,9 +67,23 @@ public abstract class AbstractCrudControllerTest<T extends Nameable> {
                 .andExpect(content().string(Matchers.containsString(nameable.getName())));
     }
 
+    public void testFindByName(T nameable) throws Exception {
+        String randomName = UUID.randomUUID().toString();
+
+        Mockito.when(getRepository().findByName(randomName)).thenReturn(nameable);
+
+        final ResultActions resultActions = mockMvc.perform(
+                get(path + "/&name="+randomName));
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.containsString(nameable.getName())));
+    }
+
     @Test
     @WithMockUser(GUEST_USER)
-    public void testReturn404WhenResourceNotFound() throws Exception {
+    public void testReturn404WhenResourceNotFoundById() throws Exception {
         final ResultActions resultActions = mockMvc.perform(
                 get(path + "/1"));
 
@@ -77,6 +93,20 @@ public abstract class AbstractCrudControllerTest<T extends Nameable> {
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(Matchers.containsString("not found")));
     }
+
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testReturn404WhenResourceNotFoundByName() throws Exception {
+        final ResultActions resultActions = mockMvc.perform(
+                get(path + "/&name=random"));
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(Matchers.containsString("not found")));
+    }
+
 
     @Test
     public void testReturn401WhenNotLoggedIn() throws Exception {
@@ -113,6 +143,6 @@ public abstract class AbstractCrudControllerTest<T extends Nameable> {
     }
 
 
-    public abstract JpaRepository<T, Long> getRepository();
+    public abstract R getRepository();
 
 }
