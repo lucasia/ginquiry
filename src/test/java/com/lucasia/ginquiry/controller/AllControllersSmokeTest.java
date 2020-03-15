@@ -14,12 +14,17 @@ public class AllControllersSmokeTest {
     @Autowired
     private GinCrudController ginController;
 
+    @Autowired
+    private UserCrudController userController;
+
     @Test
     public void contextLoads() throws Exception {
 
         Assertions.assertNotNull(brandController);
 
         Assertions.assertNotNull(ginController);
+
+        Assertions.assertNotNull(userController);
     }
 
 }

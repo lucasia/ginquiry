@@ -1,11 +1,13 @@
 package com.lucasia.ginquiry.controller;
 
+import com.lucasia.ginquiry.dao.UserRepository;
 import org.hamcrest.Matchers;
 import org.hamcrest.text.IsEmptyString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -20,8 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserController.class) // run without the server
 public class UserControllerTest {
-    @Autowired
-    private WebApplicationContext context;
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +42,6 @@ public class UserControllerTest {
     @Test
     @WithMockUser("guest")
     public void testPrincipalSuccessAndUsernameAvailableWhenLoggedIn() throws Exception {
-
         final ResultActions resultActions = mockMvc.perform(get(principalPath));
 
         resultActions.andDo(
