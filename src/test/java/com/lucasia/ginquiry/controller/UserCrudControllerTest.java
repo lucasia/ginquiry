@@ -1,14 +1,14 @@
 package com.lucasia.ginquiry.controller;
 
-import com.lucasia.ginquiry.dao.BrandRepository;
 import com.lucasia.ginquiry.dao.UserRepository;
-import com.lucasia.ginquiry.domain.Brand;
 import com.lucasia.ginquiry.domain.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.web.util.NestedServletException;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -27,7 +27,10 @@ public class UserCrudControllerTest extends AbstractCrudControllerTest<User> {
     @Test
     @WithMockUser(GUEST_USER)
     public void testFindAll() throws Exception {
-        testFindAll(Arrays.asList(createUserRandomNameAndPassword(), createUserRandomNameAndPassword()));
+        NestedServletException ex = Assertions.assertThrows(NestedServletException.class, () ->
+                testFindAll(Arrays.asList(createUserRandomNameAndPassword(), createUserRandomNameAndPassword())));
+
+        Assertions.assertEquals(UnsupportedOperationException.class, ex.getRootCause().getClass());
     }
 
     @Test

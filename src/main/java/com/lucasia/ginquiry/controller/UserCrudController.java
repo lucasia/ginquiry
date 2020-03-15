@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @Controller
 @RequestMapping(UserCrudController.USER_PATH)
@@ -22,4 +24,8 @@ public class UserCrudController extends AbstractCrudController<User, Long> {
         super(userRepository);
     }
 
+    @Override
+    List<User> all() {
+        throw new UnsupportedOperationException("Find all Users not supported");
+    }
 }
