@@ -13,11 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.util.NestedServletException;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 
@@ -32,11 +30,11 @@ public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
     private BoozeRepository boozeRepository;
 
     @MockBean
-    private BoozeService boozeClient;
+    private BoozeService boozeService;
 
     @BeforeEach
     void setUp() {
-        Assertions.assertNotNull(boozeClient);
+        Assertions.assertNotNull(boozeService);
     }
 
     public GinControllerTest() {

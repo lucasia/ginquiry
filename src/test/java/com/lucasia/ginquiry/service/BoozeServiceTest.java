@@ -1,12 +1,16 @@
 package com.lucasia.ginquiry.service;
 
+import com.lucasia.ginquiry.dao.BoozeRepository;
+import com.lucasia.ginquiry.dao.BrandRepository;
 import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
 import lombok.extern.log4j.Log4j2;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,12 +20,22 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 
-@SpringBootTest
+@DataJpaTest
 @Log4j2
 public class BoozeServiceTest {
 
     @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private BoozeRepository boozeRepository;
+
     private BoozeService boozeService;
+
+    @BeforeEach
+    void setUp() {
+        boozeService = new BoozeServiceImpl(boozeRepository, brandRepository);
+    }
 
     @Test
     public void testAddNewBoozeWithExistingBrandSucceeds() {

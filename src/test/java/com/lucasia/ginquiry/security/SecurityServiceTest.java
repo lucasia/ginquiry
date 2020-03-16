@@ -8,8 +8,10 @@ import org.hamcrest.text.IsEmptyString;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -24,7 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserCrudController.class) // run without the server
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)    // uses the full SpringBoot context to include Security context
+@AutoConfigureMockMvc
 public class SecurityServiceTest {
 
     @Autowired
@@ -34,7 +37,6 @@ public class SecurityServiceTest {
 
     @MockBean
     private UserRepository userRepository;
-
 
     @Test
     public void testWithoutCredentialsFails() throws Exception {
@@ -79,21 +81,32 @@ public class SecurityServiceTest {
                 .andExpect(status().isOk());
     }
 
-    /*
     @Test
     public void testWithCredentialsSucceedsWithAuthentication() throws Exception {
-        Mockito.when(userRepository.findByName("guest")).thenReturn(new User("guest", "guest", true));
+        final String password = new BCryptPasswordEncoder().encode("guest");
 
-        final MockHttpServletRequestBuilder requestBuilder = get(path).with(httpBasic("guest", "guest"));
+        Mockito.when(userRepository.findByName("guest")).thenReturn(new User("guest", password, true));
+        final MockHttpServletRequestBuilder requestBuilder = mockFindByid(1L).with(httpBasic("guest", "guest"));
 
         final ResultActions resultActions = mockMvc.perform(requestBuilder);
-
 
         resultActions.andDo(
                 print())
                 .andExpect(status().isOk());
     }
-    
-     */
+
+    @Test
+    public void test() throws Exception {
+        final String password = new BCryptPasswordEncoder().encode("guest");
+
+        Mockito.when(userRepository.findByName("guest")).thenReturn(new User("guest", password, true));
+        final MockHttpServletRequestBuilder requestBuilder = mockFindByid(1L).with(httpBasic("guest", "guest"));
+
+        final ResultActions resultActions = mockMvc.perform(requestBuilder);
+
+        resultActions.andDo(
+                print())
+                .andExpect(status().isOk());
+    }
 
 }
