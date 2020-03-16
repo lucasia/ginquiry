@@ -10,8 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.util.NestedServletException;
 
-import java.util.Arrays;
-
 
 @WebMvcTest(UserCrudController.class) // run without the server
 public class UserCrudControllerTest extends AbstractCrudControllerTest<User> {
@@ -26,8 +24,7 @@ public class UserCrudControllerTest extends AbstractCrudControllerTest<User> {
     @Test
     @WithMockUser(GUEST_USER)
     public void testFindAll() throws Exception {
-        NestedServletException ex = Assertions.assertThrows(NestedServletException.class, () ->
-                testFindAll(Arrays.asList(getDomainFactory().newInstanceRandomName(), getDomainFactory().newInstanceRandomName())));
+        NestedServletException ex = Assertions.assertThrows(NestedServletException.class, super::testFindAll);
 
         Assertions.assertEquals(UnsupportedOperationException.class, ex.getRootCause().getClass());
     }

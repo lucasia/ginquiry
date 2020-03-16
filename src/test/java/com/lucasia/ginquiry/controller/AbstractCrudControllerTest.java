@@ -2,7 +2,6 @@ package com.lucasia.ginquiry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucasia.ginquiry.dao.NameableJpaRepository;
-import com.lucasia.ginquiry.domain.Brand;
 import com.lucasia.ginquiry.domain.DomainFactory;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
@@ -44,31 +43,11 @@ public abstract class AbstractCrudControllerTest<T extends Nameable>{
         this.domainFactory = domainFactory;
         this.path = path;
     }
+
     @Test
     @WithMockUser(GUEST_USER)
     public void testFindAll() throws Exception {
-        testFindAll(Arrays.asList(domainFactory.newInstanceRandomName(), domainFactory.newInstanceRandomName()));
-    }
-
-    @Test
-    @WithMockUser(GUEST_USER)
-    public void testFindById() throws Exception {
-        testFindById(domainFactory.newInstanceRandomName());
-    }
-
-    @Test
-    @WithMockUser(GUEST_USER)
-    public void testFindByName() throws Exception {
-        testFindByName(domainFactory.newInstanceRandomName());
-    }
-
-    @Test
-    @WithMockUser(GUEST_USER)
-    public void testNewSucceeds() throws Exception {
-        testAddNewSucceeds(domainFactory.newInstanceRandomName());
-    }
-
-    protected void testFindAll(List<T> nameableList) throws Exception {
+        List<T> nameableList = Arrays.asList(domainFactory.newInstanceRandomName(), domainFactory.newInstanceRandomName());
         Mockito.when(getRepository().findAll()).thenReturn(nameableList);
 
         final ResultActions resultActions = mockMvc.perform(
@@ -82,7 +61,10 @@ public abstract class AbstractCrudControllerTest<T extends Nameable>{
         }
     }
 
-    protected void testFindById(T nameable) throws Exception {
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testFindById() throws Exception {
+        T nameable = domainFactory.newInstanceRandomName();
         Mockito.when(getRepository().findById(1L)).thenReturn(Optional.ofNullable(nameable));
 
         final ResultActions resultActions = mockMvc.perform(
@@ -94,7 +76,10 @@ public abstract class AbstractCrudControllerTest<T extends Nameable>{
                 .andExpect(content().string(Matchers.containsString(nameable.getName())));
     }
 
-    protected void testFindByName(T nameable) throws Exception {
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testFindByName() throws Exception {
+        T nameable = domainFactory.newInstanceRandomName();
         String randomName = UUID.randomUUID().toString();
 
         Mockito.when(getRepository().findByName(randomName)).thenReturn(nameable);
@@ -106,6 +91,12 @@ public abstract class AbstractCrudControllerTest<T extends Nameable>{
                 print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(Matchers.containsString(nameable.getName())));
+    }
+
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testNewSucceeds() throws Exception {
+        testAddNewSucceeds(domainFactory.newInstanceRandomName());
     }
 
     @Test
@@ -145,6 +136,7 @@ public abstract class AbstractCrudControllerTest<T extends Nameable>{
                 .andExpect(status().isUnauthorized())
                 .andExpect(content().string(IsEmptyString.emptyString()));
     }
+
 
     protected void testAddNewSucceeds(T nameable) throws Exception {
         final ResultActions resultActions = saveEntity(nameable);
