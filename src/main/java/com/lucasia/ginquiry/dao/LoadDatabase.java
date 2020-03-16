@@ -4,7 +4,7 @@ import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
 import com.lucasia.ginquiry.domain.User;
 import com.lucasia.ginquiry.service.BoozeService;
-import com.lucasia.ginquiry.e2e.UserService;
+import com.lucasia.ginquiry.security.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
