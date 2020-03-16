@@ -4,6 +4,7 @@ import com.lucasia.ginquiry.dao.BoozeRepository;
 import com.lucasia.ginquiry.dao.BrandRepository;
 import com.lucasia.ginquiry.domain.Booze;
 import com.lucasia.ginquiry.domain.Brand;
+import com.lucasia.ginquiry.domain.DomainFactory;
 import com.lucasia.ginquiry.service.BoozeService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 @WebMvcTest(GinCrudController.class) // run without the server
 @Log4j2
-public class GinControllerTest extends AbstractCrudControllerTest<Booze, BoozeRepository> {
+public class GinControllerTest extends AbstractCrudControllerTest<Booze> {
 
     @MockBean
     private BrandRepository brandRepository;
@@ -33,26 +34,13 @@ public class GinControllerTest extends AbstractCrudControllerTest<Booze, BoozeRe
     @MockBean
     private BoozeService boozeClient;
 
-
     @BeforeEach
     void setUp() {
         Assertions.assertNotNull(boozeClient);
     }
 
     public GinControllerTest() {
-        super(GinCrudController.GIN_PATH);
-    }
-
-    @Test
-    @WithMockUser(GUEST_USER)
-    public void testFindAll() throws Exception {
-        testFindAll(Arrays.asList(Booze.ROCK_ROSE_WINTER, Booze.ROCK_ROSE_SPRING));
-    }
-
-    @Test
-    @WithMockUser(GUEST_USER)
-    public void testFindById() throws Exception {
-        testFindById(Booze.ROCK_ROSE_WINTER);
+        super(new DomainFactory.BoozeDomainFactory(new Brand(UUID.randomUUID().toString())), GinCrudController.GIN_PATH);
     }
 
     @Test

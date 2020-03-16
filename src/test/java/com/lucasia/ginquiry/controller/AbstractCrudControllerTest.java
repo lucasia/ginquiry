@@ -2,6 +2,8 @@ package com.lucasia.ginquiry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucasia.ginquiry.dao.NameableJpaRepository;
+import com.lucasia.ginquiry.domain.Brand;
+import com.lucasia.ginquiry.domain.DomainFactory;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Log4j2
-public abstract class AbstractCrudControllerTest<T extends Nameable, R extends NameableJpaRepository<T, Long>>{
+public abstract class AbstractCrudControllerTest<T extends Nameable>{
 
     public static final String GUEST_USER = "guest";
 
@@ -35,12 +38,37 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
     private MockMvc mockMvc;
 
     private String path;
+    private DomainFactory<T> domainFactory;
 
-    public AbstractCrudControllerTest(@NonNull String path) {
+    public AbstractCrudControllerTest(DomainFactory<T> domainFactory, @NonNull String path) {
+        this.domainFactory = domainFactory;
         this.path = path;
     }
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testFindAll() throws Exception {
+        testFindAll(Arrays.asList(domainFactory.newInstanceRandomName(), domainFactory.newInstanceRandomName()));
+    }
 
-    public void testFindAll(List<T> nameableList) throws Exception {
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testFindById() throws Exception {
+        testFindById(domainFactory.newInstanceRandomName());
+    }
+
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testFindByName() throws Exception {
+        testFindByName(domainFactory.newInstanceRandomName());
+    }
+
+    @Test
+    @WithMockUser(GUEST_USER)
+    public void testNewSucceeds() throws Exception {
+        testAddNewSucceeds(domainFactory.newInstanceRandomName());
+    }
+
+    protected void testFindAll(List<T> nameableList) throws Exception {
         Mockito.when(getRepository().findAll()).thenReturn(nameableList);
 
         final ResultActions resultActions = mockMvc.perform(
@@ -54,7 +82,7 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
         }
     }
 
-    public void testFindById(T nameable) throws Exception {
+    protected void testFindById(T nameable) throws Exception {
         Mockito.when(getRepository().findById(1L)).thenReturn(Optional.ofNullable(nameable));
 
         final ResultActions resultActions = mockMvc.perform(
@@ -66,7 +94,7 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
                 .andExpect(content().string(Matchers.containsString(nameable.getName())));
     }
 
-    public void testFindByName(T nameable) throws Exception {
+    protected void testFindByName(T nameable) throws Exception {
         String randomName = UUID.randomUUID().toString();
 
         Mockito.when(getRepository().findByName(randomName)).thenReturn(nameable);
@@ -118,7 +146,7 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
                 .andExpect(content().string(IsEmptyString.emptyString()));
     }
 
-    public void testAddNewSucceeds(T nameable) throws Exception {
+    protected void testAddNewSucceeds(T nameable) throws Exception {
         final ResultActions resultActions = saveEntity(nameable);
 
         resultActions.andDo(
@@ -128,7 +156,7 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
 
     }
 
-    public ResultActions saveEntity(T nameable) throws Exception {
+    protected ResultActions saveEntity(T nameable) throws Exception {
         Mockito.when(getRepository().save(nameable)).thenReturn(nameable);
 
         final String jsonContent = new ObjectMapper().writeValueAsString(nameable);
@@ -141,5 +169,9 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
         return mockMvc.perform(requestBuilder);
     }
 
-    public abstract R getRepository();
+    public abstract NameableJpaRepository<T, Long> getRepository();
+
+    public DomainFactory<T> getDomainFactory() {
+        return domainFactory;
+    }
 }
