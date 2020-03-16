@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)    // uses the full SpringBoot context to include Security context
 @AutoConfigureMockMvc
-public class SecurityServiceTest {
+public class SecurityServiceITest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -83,20 +83,6 @@ public class SecurityServiceTest {
 
     @Test
     public void testWithCredentialsSucceedsWithAuthentication() throws Exception {
-        final String password = new BCryptPasswordEncoder().encode("guest");
-
-        Mockito.when(userRepository.findByName("guest")).thenReturn(new User("guest", password, true));
-        final MockHttpServletRequestBuilder requestBuilder = mockFindByid(1L).with(httpBasic("guest", "guest"));
-
-        final ResultActions resultActions = mockMvc.perform(requestBuilder);
-
-        resultActions.andDo(
-                print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void test() throws Exception {
         final String password = new BCryptPasswordEncoder().encode("guest");
 
         Mockito.when(userRepository.findByName("guest")).thenReturn(new User("guest", password, true));
