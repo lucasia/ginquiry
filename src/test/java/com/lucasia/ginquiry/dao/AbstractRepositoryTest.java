@@ -1,5 +1,6 @@
 package com.lucasia.ginquiry.dao;
 
+import com.lucasia.ginquiry.domain.DomainFactory;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.extern.log4j.Log4j2;
 import org.hamcrest.MatcherAssert;
@@ -7,12 +8,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 
@@ -22,11 +21,17 @@ import static org.hamcrest.CoreMatchers.hasItem;
 // TODO: change this to use a mock, not container
 // @AutoConfigureMockMvc
 //@DataJpaTest
-public abstract class AbstractRepositoryTest<T extends Nameable, R extends NameableJpaRepository<T, Long>> {
+public abstract class AbstractRepositoryTest<T extends Nameable> {
+
+    private DomainFactory<T> domainFactory;
+
+    public AbstractRepositoryTest(DomainFactory<T> domainFactory) {
+        this.domainFactory = domainFactory;
+    }
 
     @Test
     public void testFindAll() {
-        final T entity = newInstanceRandomName();
+        final T entity = getDomainFactory().newInstanceRandomName();
 
         saveEntity(entity);
 
@@ -40,11 +45,11 @@ public abstract class AbstractRepositoryTest<T extends Nameable, R extends Namea
 
     @Test
     public void testFindEntityByName() {
-        final T entity = newInstanceRandomName();
+        final T entity = getDomainFactory().newInstanceRandomName();
 
         saveEntity(entity);
 
-        T resultEntity = getNameableRepository().findByName(entity.getName());
+        T resultEntity = getRepository().findByName(entity.getName());
         Assertions.assertEquals(entity, resultEntity);
     }
 
@@ -55,26 +60,20 @@ public abstract class AbstractRepositoryTest<T extends Nameable, R extends Namea
     @Test
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void testSavingEntityWithSameNameThrowsException() {
-        final T entity = newInstanceRandomName();
+        final T entity = getDomainFactory().newInstanceRandomName();
 
         saveEntity(entity);
 
         // ensure entity name is unique
-        final T entitySameName = newInstance(entity.getName());
+        final T entitySameName = getDomainFactory().newInstance(entity.getName());
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> getRepository().save(entitySameName));
     }
 
-    public abstract R getRepository();
 
-    public R getNameableRepository() {
-        return getRepository();
+    public abstract NameableJpaRepository<T, Long> getRepository();
+
+    protected DomainFactory<T> getDomainFactory() {
+        return domainFactory;
     }
-
-    public T newInstanceRandomName() {
-        return newInstance(UUID.randomUUID().toString());
-    }
-
-    public abstract T newInstance(String name);
-
 
 }

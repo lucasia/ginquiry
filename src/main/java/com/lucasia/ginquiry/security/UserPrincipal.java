@@ -1,5 +1,6 @@
-package com.lucasia.ginquiry.domain;
+package com.lucasia.ginquiry.security;
 
+import com.lucasia.ginquiry.domain.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

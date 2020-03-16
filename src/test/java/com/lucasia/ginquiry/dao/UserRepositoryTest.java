@@ -1,25 +1,21 @@
 package com.lucasia.ginquiry.dao;
 
+import com.lucasia.ginquiry.domain.DomainFactory;
 import com.lucasia.ginquiry.domain.User;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
-
-public class UserRepositoryTest extends AbstractRepositoryTest<User, UserRepository>{
+public class UserRepositoryTest extends AbstractRepositoryTest<User>{
 
     @Autowired
     private UserRepository userRepository;
+
+    public UserRepositoryTest() {
+        super(new DomainFactory.UserDomainFactory());
+    }
 
     @Override
     public UserRepository getRepository() {
         return userRepository;
     }
 
-    @Override
-    public User newInstance(String name) {
-        return new User(name, UUID.randomUUID().toString(), true);
-    }
 }

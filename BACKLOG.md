@@ -1,9 +1,12 @@
 # ginquiry
 
 ###Non-Functional 
-1. Improve security from front-end to back-end (JWT?) see: https://spring.io/guides/tutorials/spring-security-and-angular-js/)
 1. Deploy to Google cloud App engine
 1. Add Service discovery via Eureka
+1. Improve security from front-end to back-end (JWT?) see: https://spring.io/guides/tutorials/spring-security-and-angular-js/)
+1. Add Code Coverage Metric
+1. Add Checkstyle Metric
+
 
 ###Functional
 1. Add Users

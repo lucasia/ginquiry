@@ -1,6 +1,7 @@
 package com.lucasia.ginquiry.dao;
 
 import com.lucasia.ginquiry.domain.Brand;
+import com.lucasia.ginquiry.domain.DomainFactory;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,18 +17,17 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 
-public class BrandRepositoryTest extends AbstractRepositoryTest<Brand, BrandRepository>{
+public class BrandRepositoryTest extends AbstractRepositoryTest<Brand>{
 
     @Autowired
     private BrandRepository brandRepository;
 
-    @Override
-    public BrandRepository getRepository() {
-        return brandRepository;
+    public BrandRepositoryTest() {
+        super(new DomainFactory.BrandDomainFactory());
     }
 
     @Override
-    public Brand newInstance(String name) {
-        return new Brand(name);
+    public BrandRepository getRepository() {
+        return brandRepository;
     }
 }

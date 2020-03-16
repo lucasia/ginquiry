@@ -141,7 +141,5 @@ public abstract class AbstractCrudControllerTest<T extends Nameable, R extends N
         return mockMvc.perform(requestBuilder);
     }
 
-
     public abstract R getRepository();
-
 }
