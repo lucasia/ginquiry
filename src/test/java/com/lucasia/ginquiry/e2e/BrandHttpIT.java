@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.security;
+package com.lucasia.ginquiry.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucasia.ginquiry.controller.BrandCrudController;
@@ -23,7 +23,7 @@ import java.util.UUID;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Log4j2
-public class BrandHttpITest {
+public class BrandHttpIT {
 
     @LocalServerPort
     private int port;

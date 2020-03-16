@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.security;
+package com.lucasia.ginquiry.e2e;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

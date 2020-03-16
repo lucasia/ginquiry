@@ -1,8 +1,7 @@
-package com.lucasia.ginquiry.security;
+package com.lucasia.ginquiry.e2e;
 
 import com.lucasia.ginquiry.dao.UserRepository;
 import com.lucasia.ginquiry.domain.User;
-import com.lucasia.ginquiry.security.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

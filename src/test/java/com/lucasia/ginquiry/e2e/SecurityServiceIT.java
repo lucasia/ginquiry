@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.security;
+package com.lucasia.ginquiry.e2e;
 
 import com.lucasia.ginquiry.controller.UserCrudController;
 import com.lucasia.ginquiry.dao.UserRepository;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)    // uses the full SpringBoot context to include Security context
 @AutoConfigureMockMvc
-public class SecurityServiceITest {
+public class SecurityServiceIT {
 
     @Autowired
     private MockMvc mockMvc;

@@ -1,4 +1,4 @@
-package com.lucasia.ginquiry.security;
+package com.lucasia.ginquiry.e2e;
 
 import com.lucasia.ginquiry.domain.User;
 import lombok.Data;
