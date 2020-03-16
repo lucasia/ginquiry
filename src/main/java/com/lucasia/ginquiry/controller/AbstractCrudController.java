@@ -1,6 +1,6 @@
 package com.lucasia.ginquiry.controller;
 
-import com.lucasia.ginquiry.dao.NameableRepository;
+import com.lucasia.ginquiry.dao.NameableJpaRepository;
 import com.lucasia.ginquiry.util.ResourceNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Log4j2
-public abstract class AbstractCrudController<T, ID extends Long, R extends JpaRepository<T, Long> & NameableRepository<T>> {
+public abstract class AbstractCrudController<T, ID extends Long, R extends NameableJpaRepository<T, ID>> {
 
     private R repository;
 

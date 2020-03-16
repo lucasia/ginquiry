@@ -1,7 +1,7 @@
 package com.lucasia.ginquiry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lucasia.ginquiry.dao.NameableRepository;
+import com.lucasia.ginquiry.dao.NameableJpaRepository;
 import com.lucasia.ginquiry.domain.Nameable;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -10,7 +10,6 @@ import org.hamcrest.text.IsEmptyString;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Log4j2
-public abstract class AbstractCrudControllerTest<T extends Nameable, R extends JpaRepository<T, Long> & NameableRepository<T>>{
+public abstract class AbstractCrudControllerTest<T extends Nameable, R extends NameableJpaRepository<T, Long>>{
 
     public static final String GUEST_USER = "guest";
 

@@ -22,7 +22,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 // TODO: change this to use a mock, not container
 // @AutoConfigureMockMvc
 //@DataJpaTest
-public abstract class AbstractRepositoryTest<T extends Nameable, R extends JpaRepository<T, Long> & NameableRepository<T>> {
+public abstract class AbstractRepositoryTest<T extends Nameable, R extends NameableJpaRepository<T, Long>> {
 
     @Test
     public void testFindAll() {
