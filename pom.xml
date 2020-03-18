@@ -15,8 +15,20 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
+
+    <dependencyManagement>
+        <dependencies>
+          <dependency>
+             <groupId>org.springframework.cloud</groupId>
+             <artifactId>spring-cloud-gcp-dependencies</artifactId>
+             <version>1.1.0.M1</version>
+             <type>pom</type>
+             <scope>import</scope>
+          </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -61,14 +73,50 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- end server side -->
+
+        <!-- start gcp -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+        </dependency>
+
+<!--
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>                
+
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>mysql-socket-factory</artifactId>
+		</dependency>
+-->        
+
+
+			<!-- protobuf-java:2.6.0 included by MySQL Connector J is not compatible with
+						Google Cloud Java libraries. -->
+
+<!-->                        
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.protobuf</groupId>
+					<artifactId>protobuf-java</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>        
+-->        
 
-		<!-- end server side -->
-
+        <!-- end gcp -->
 
 		<!-- test dependencies -->
 		<dependency>
@@ -150,5 +198,16 @@
 			</plugin>
 		</plugins>
 	</build>
+
+    <repositories>
+            <repository>
+                    <id>spring-milestones</id>
+                    <name>Spring Milestones</name>
+                    <url>https://repo.spring.io/libs-milestone</url>
+                    <snapshots>
+                            <enabled>false</enabled>
+                    </snapshots>
+            </repository>
+    </repositories>
 
 </project>

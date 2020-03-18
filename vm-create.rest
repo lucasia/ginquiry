@@ -1,0 +1,74 @@
+POST https://www.googleapis.com/compute/v1/projects/sonic-cumulus-269916/zones/europe-west4-a/instances
+{
+  "kind": "compute#instance",
+  "name": "vm-europe-west4a-1",
+  "zone": "projects/sonic-cumulus-269916/zones/europe-west4-a",
+  "machineType": "projects/sonic-cumulus-269916/zones/europe-west4-a/machineTypes/f1-micro",
+  "displayDevice": {
+    "enableDisplay": false
+  },
+  "metadata": {
+    "kind": "compute#metadata",
+    "items": []
+  },
+  "tags": {
+    "items": []
+  },
+  "disks": [
+    {
+      "kind": "compute#attachedDisk",
+      "type": "PERSISTENT",
+      "boot": true,
+      "mode": "READ_WRITE",
+      "autoDelete": true,
+      "deviceName": "vm-europe-west4a-1",
+      "initializeParams": {
+        "sourceImage": "projects/debian-cloud/global/images/debian-9-stretch-v20200309",
+        "diskType": "projects/sonic-cumulus-269916/zones/europe-west4-a/diskTypes/pd-standard",
+        "diskSizeGb": "10"
+      },
+      "diskEncryptionKey": {}
+    }
+  ],
+  "canIpForward": false,
+  "networkInterfaces": [
+    {
+      "kind": "compute#networkInterface",
+      "subnetwork": "projects/sonic-cumulus-269916/regions/europe-west4/subnetworks/default",
+      "accessConfigs": [
+        {
+          "kind": "compute#accessConfig",
+          "name": "External NAT",
+          "type": "ONE_TO_ONE_NAT",
+          "networkTier": "PREMIUM"
+        }
+      ],
+      "aliasIpRanges": []
+    }
+  ],
+  "description": "",
+  "labels": {},
+  "scheduling": {
+    "preemptible": false,
+    "onHostMaintenance": "MIGRATE",
+    "automaticRestart": true,
+    "nodeAffinities": []
+  },
+  "deletionProtection": false,
+  "reservationAffinity": {
+    "consumeReservationType": "ANY_RESERVATION"
+  },
+  "serviceAccounts": [
+    {
+      "email": "464969111377-compute@developer.gserviceaccount.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring.write",
+        "https://www.googleapis.com/auth/servicecontrol",
+        "https://www.googleapis.com/auth/service.management.readonly",
+        "https://www.googleapis.com/auth/trace.append"
+      ]
+    }
+  ]
+}
